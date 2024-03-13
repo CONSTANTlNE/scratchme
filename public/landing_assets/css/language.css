@@ -1,0 +1,66 @@
+.language-selector {
+    margin-right: 10px !important;
+}
+.language-selector,
+.language-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Dropdown button styles */
+.language-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    color: white;
+    /*border: 1px solid #ccc;*/
+    padding: 0;
+    cursor: pointer;
+}
+
+.language-button img {
+    margin-right: 8px;
+    width: 30px;
+    height: 30px;
+}
+
+.language-button i {
+    margin-left: auto;
+}
+
+/* Dropdown menu styles */
+.language-menu {
+    display: none;
+    position: absolute;
+    /*background: #fff;*/
+    /*border: 1px solid #ccc;*/
+    padding: 8px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.language-menu li {
+    display: block;
+    border: none;
+}
+
+.language-menu li a {
+    display: block;
+    /*padding: 0;*/
+    color: white;
+    border: none !important;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.language-menu li a img {
+    margin-right: 8px;
+    width: 30px;
+    height: 30px;
+    border: none;
+}
+
+/* Show the dropdown when hovering over the button */
+.language-selector:hover .language-menu {
+    display: block;
+}
