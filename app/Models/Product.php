@@ -12,18 +12,36 @@ use Spatie\Translatable\HasTranslations;
 
 class Product extends Model implements HasMedia
 {
-    use HasFactory , InteractsWithMedia,HasTranslations;
+    use HasFactory, InteractsWithMedia, HasTranslations;
 
 
+    public $translatable = ['product_name', 'product_short_description', 'product_long_description',];
 
-    public $translatable = ['product_name','product_short_description','product_long_description',];
-
-    public function prices(){
-     return   $this->hasMany(Price::class);
+    public function prices()
+    {
+        return $this->hasMany(Price::class);
     }
 
-    public function features(){
+    public function features()
+    {
         return $this->hasMany(ProductFeature::class);
+    }
+
+    public function cart()
+    {
+        $this->hasMany(Cart::class);
+    }
+
+    public function orders()
+    {
+        $this->belongsToMany(Order::class);
+
+
+    }
+
+    public function productorder ()
+    {
+        return $this->hasMany(OrderProduct::class, 'product_id', 'id');
     }
 
 
@@ -31,28 +49,18 @@ class Product extends Model implements HasMedia
     {
         parent::boot();
 
-        static::creating(function ($product) {
-            // Generate a slug for the article based on its title
+        static::saving(function ($product) {
             $slug = $product->createSlug($product->product_name);
-            // Assign the generated slug to the article
             $product->slug = $slug;
         });
     }
 
-    /**
-     * Create a slug from the given title.
-     *
-     * @param string $product The title to create a slug from
-     * @return string The generated slug
-     */
-    private function createSlug($product)
+    public function createSlug($product)
     {
-        // Convert non-Latin characters to their closest ASCII equivalents
         $name = Str::ascii($product);
-
-        // Replace spaces with dashes and lowercase the title
         $slug = Str::slug($name, '-');
-
         return $slug;
     }
+
+
 }

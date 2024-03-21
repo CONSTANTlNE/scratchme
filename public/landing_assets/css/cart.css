@@ -1,0 +1,26 @@
+
+.cart {
+    display: flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+}
+
+.cart svg {
+    width: 100%;
+    height: 100%;
+}
+
+.cart__count {
+    font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    right: -5px;
+    top: -7px;
+    display: inline-block;
+    padding: 2px 9px;
+    color: #fff;
+    background-color: crimson;
+    border-radius: 100%;
+}

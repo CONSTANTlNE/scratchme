@@ -24,6 +24,7 @@
                                 <th style="border:1px solid black ;text-align: center">Short Description</th>
                                 <th style="border:1px solid black ;text-align: center">Long Description</th>
                                 <th style="border:1px solid black ;text-align: center">Price</th>
+                                <th style="border:1px solid black ;text-align: center">Discount Price</th>
                                 <th style="border:1px solid black ;text-align: center">Status</th>
                                 <th style="border:1px solid black ;text-align: center">For Landing</th>
                                 <th style="border:1px solid black ;text-align: center">Position</th>
@@ -34,13 +35,68 @@
                             <tbody>
                             @foreach($products as $index => $product)
                                 <tr>
-                                    <td style="border:1px solid black ;text-align: center">{{$product->product_name}}</td>
-                                    @foreach($product->media as $img)
-                                        <td style="border:1px solid black ;text-align: center">
-                                            <img style="height: 180px;width: 100%;min-width: 130px"
-                                                 src="{{$img->getUrl()}}">
-                                        </td>
-                                    @endforeach
+                                    <td style="border:1px solid black ;text-align: center">
+                                        <p>{{$product->product_name}}</p>
+                                        <a href="javascript:void(0);" class="ti-btn ti-btn-light ti-btn-wave"
+                                           data-hs-overlay="#prodname{{$index}}">Change
+                                        </a>
+                                        <div id="prodname{{$index}}"
+                                             class="hs-overlay hidden ti-modal  [--overlay-backdrop:static]">
+                                            <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out">
+                                                <form action="{{route('updateProdName')}}" method="post">
+                                                    @csrf
+                                                    <div class="ti-modal-content">
+                                                        <div class="ti-modal-header">
+                                                            <h6 class="modal-title text-[1rem] font-semibold">Edit
+                                                                Short Description</h6>
+                                                            <button type="button"
+                                                                    class="hs-dropdown-toggle !text-[1rem] !font-semibold !text-defaulttextcolor"
+                                                                    data-hs-overlay="#staticBackdrop">
+                                                                <span class="sr-only">Close</span>
+                                                                <i class="ri-close-line"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="ti-modal-body px-4">
+                                                            <div class="xl:col-span-12 col-span-12 ">
+                                                                <input type="hidden" name="id"
+                                                                       value="{{$product->id}}">
+                                                                <div class=" flex justify-center align-middle mt-2">
+                                                                    <input class="form-control" name="prodname"
+                                                                           value="{{$product->product_name}}">
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="ti-modal-footer">
+                                                            <button type="button"
+                                                                    class="hs-dropdown-toggle ti-btn  ti-btn-secondary-full align-middle"
+                                                                    data-hs-overlay="#prodname{{$index}}">
+                                                                Close
+                                                            </button>
+                                                            <button
+                                                                    class="ti-btn bg-primary text-white !font-medium">
+                                                                save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                    <td style="border:1px solid black ;text-align: center">
+                                        @foreach($product->media as $img)
+                                            <a href="{{$img->getUrl()}}" class="defaultGlightbox">
+                                            @if($loop->first)
+                                                <img style="height: 180px;width: 100%;min-width: 130px"
+                                                     src="{{$img->getUrl()}}">
+                                            @endif
+                                            </a>
+                                        @endforeach
+                                    </td>
+
                                     <td style="border:1px solid black ;text-align: center">
                                         @foreach($product->features as $feature)
                                             {{--                                            @php dd($feature->feature) @endphp--}}
@@ -66,12 +122,12 @@
                                                             </button>
                                                         </div>
                                                         <div class="ti-modal-body px-4">
-                                                            <template class="features-template">
+                                                            <template class="features-template2">
                                                                 <div class="flex justify-center align-middle mt-2">
                                                                     <input style="display: inline" type="text"
                                                                            class="form-control" id="feature"
                                                                            placeholder="Default Radius"
-                                                                           name="feature[]">
+                                                                           name="feature[{{app()->getLocale()}}][]">
                                                                     <span style="color:red;margin-left: 5px;cursor: pointer;padding-top:10px"
                                                                           class="removeButton material-symbols-outlined">remove</span>
                                                                 </div>
@@ -82,7 +138,7 @@
                                                                 @foreach($product->features as $feature)
                                                                     <div class="deleteFeature flex justify-center align-middle mt-2">
                                                                         <textarea class="form-control"
-                                                                                  name="feature{{$feature->id}}[]">{{$feature->feature}}</textarea>
+                                                                                  name="feature[{{$feature->id}}][]">{{$feature->feature}}</textarea>
                                                                         <span style="color:red;margin-left: 5px;cursor: pointer;padding-top:15px"
                                                                               class="deleteFeatureButton material-symbols-outlined">remove</span>
                                                                     </div>
@@ -91,9 +147,8 @@
                                                             <div class="flex align-middle gap-2 justify-center mt-3">
                                                                 <p style="display: inline;padding-top:2px">Add
                                                                     Feature</p>
-                                                                <span
-                                                                        style="color:green;cursor:pointer;"
-                                                                        class="featuresButton material-symbols-outlined">add</span>
+                                                                <span style="color:green;cursor:pointer;"
+                                                                      class="featuresButton material-symbols-outlined">add</span>
                                                             </div>
                                                         </div>
                                                         <div class="ti-modal-footer">
@@ -112,40 +167,146 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td style="border:1px solid black ;text-align: center">{{$product->product_short_description}}</td>
-                                    <td style="border:1px solid black ;text-align: center">{{$product->product_long_description}}</td>
                                     <td style="border:1px solid black ;text-align: center">
-                                        <p class="mb-2">{{ $product->prices->last()->price }}</p>
-                                        <a href="javascript:void(0);" class="ti-btn ti-btn-light ti-btn-wave "
-                                           data-hs-overlay="#staticBackdrop{{$index}}">Change
+                                        <p>{{$product->product_short_description}}</p>
+                                        <a href="javascript:void(0);" class="ti-btn ti-btn-light ti-btn-wave"
+                                           data-hs-overlay="#shortdescrform{{$index}}">Change
                                         </a>
-                                        <div id="staticBackdrop{{$index}}"
+                                        <div id="shortdescrform{{$index}}"
                                              class="hs-overlay hidden ti-modal  [--overlay-backdrop:static]">
                                             <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out">
-                                                <form action="{{route('priceUpdate')}}" method="post">
+                                                <form action="{{route('updateShortDescr')}}" method="post">
                                                     @csrf
-                                                    <div style="max-width: 250px" class="ti-modal-content ">
-                                                        <div style="max-width: 100px!important"
-                                                             class="ti-modal-body px-4 m-auto">
-                                                            <input type="hidden" name="id"
-                                                                   value="{{$product->id}}">
-                                                            <input class="form-control" name="newprice" type="text">
+                                                    <div class="ti-modal-content">
+                                                        <div class="ti-modal-header">
+                                                            <h6 class="modal-title text-[1rem] font-semibold">Edit
+                                                                Short Description</h6>
+                                                            <button type="button"
+                                                                    class="hs-dropdown-toggle !text-[1rem] !font-semibold !text-defaulttextcolor"
+                                                                    data-hs-overlay="#staticBackdrop">
+                                                                <span class="sr-only">Close</span>
+                                                                <i class="ri-close-line"></i>
+                                                            </button>
                                                         </div>
-                                                        <div style="display: flex!important;justify-content: center!important;"
-                                                             class="ti-modal-footer ">
+                                                        <div class="ti-modal-body px-4">
+                                                            <div class="xl:col-span-12 col-span-12 ">
+                                                                <input type="hidden" name="id"
+                                                                       value="{{$product->id}}">
+                                                                <div class=" flex justify-center align-middle mt-2">
+                                                                        <textarea class="form-control"
+                                                                                  name="shortdescr">{{$product->product_short_description}}
+                                                                        </textarea>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="ti-modal-footer">
                                                             <button type="button"
                                                                     class="hs-dropdown-toggle ti-btn  ti-btn-secondary-full align-middle"
-                                                                    data-hs-overlay="#staticBackdrop{{$index}}">
+                                                                    data-hs-overlay="#shortdescrform{{$index}}">
                                                                 Close
                                                             </button>
-                                                            <button class="ti-btn bg-primary text-white !font-medium">
-                                                                change
+                                                            <button
+                                                                    class="ti-btn bg-primary text-white !font-medium">
+                                                                save
                                                             </button>
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
+
+                                    </td>
+                                    <td style="border:1px solid black ;text-align: center">
+                                        <p>{{$product->product_long_description}}</p>
+                                        <a href="javascript:void(0);" class="ti-btn ti-btn-light ti-btn-wave"
+                                           data-hs-overlay="#longdescrform{{$index}}">Change
+                                        </a>
+                                        <div id="longdescrform{{$index}}"
+                                             class="hs-overlay hidden ti-modal  [--overlay-backdrop:static]">
+                                            <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out">
+                                                <form action="{{route('updateLongDescr')}}" method="post">
+                                                    @csrf
+                                                    <div class="ti-modal-content">
+                                                        <div class="ti-modal-header">
+                                                            <h6 class="modal-title text-[1rem] font-semibold">Edit
+                                                                Short Description</h6>
+                                                            <button type="button"
+                                                                    class="hs-dropdown-toggle !text-[1rem] !font-semibold !text-defaulttextcolor"
+                                                                    data-hs-overlay="#staticBackdrop">
+                                                                <span class="sr-only">Close</span>
+                                                                <i class="ri-close-line"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="ti-modal-body px-4">
+                                                            <div class="xl:col-span-12 col-span-12">
+                                                                <input type="hidden" name="id"
+                                                                       value="{{$product->id}}">
+                                                                <div class=" flex justify-center align-middle mt-2">
+                                                                        <textarea class="form-control"
+                                                                                  name="longdescr">{{$product->product_long_description}}
+                                                                        </textarea>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="ti-modal-footer">
+                                                            <button type="button"
+                                                                    class="hs-dropdown-toggle ti-btn  ti-btn-secondary-full align-middle"
+                                                                    data-hs-overlay="#longdescrform{{$index}}">
+                                                                Close
+                                                            </button>
+                                                            <button
+                                                                    class="ti-btn bg-primary text-white !font-medium">
+                                                                save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                    <td style="border:1px solid black ;text-align: center">
+                                        <p class="mb-2">{{ $product->prices()->whereNull('discount')->latest()->first()->price}}</p>
+                                        @if($product->prices->last()->discount===null)
+                                            <a href="javascript:void(0);" class="ti-btn ti-btn-light ti-btn-wave "
+                                               data-hs-overlay="#staticBackdrop{{$index}}">Change
+                                            </a>
+                                            <div id="staticBackdrop{{$index}}"
+                                                 class="hs-overlay hidden ti-modal  [--overlay-backdrop:static]">
+                                                <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out">
+                                                    <form action="{{route('priceUpdate')}}" method="post">
+                                                        @csrf
+                                                        <div style="max-width: 250px" class="ti-modal-content ">
+                                                            <div style="max-width: 100px!important"
+                                                                 class="ti-modal-body px-4 m-auto">
+                                                                <input type="hidden" name="id"
+                                                                       value="{{$product->id}}">
+                                                                <input class="form-control" name="newprice" type="text">
+                                                            </div>
+                                                            <div style="display: flex!important;justify-content: center!important;"
+                                                                 class="ti-modal-footer ">
+                                                                <button type="button"
+                                                                        class="hs-dropdown-toggle ti-btn  ti-btn-secondary-full align-middle"
+                                                                        data-hs-overlay="#staticBackdrop{{$index}}">
+                                                                    Close
+                                                                </button>
+                                                                <button class="ti-btn bg-primary text-white !font-medium">
+                                                                    change
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td style="border:1px solid black ;text-align: center">
+                                        @if($product->prices->last()->discount!=null)
+                                            <p class="mb-2">{{ $product->prices->last()->price }}</p>
+                                        @endif
                                     </td>
                                     <td style="border:1px solid black ;text-align: center">
                                         <form action="{{route('changeProductStatus')}}" method="post"
@@ -172,9 +333,9 @@
                                             <p class="mb-2">{{$product->position}}</p>
                                         @endif
                                         <a href="javascript:void(0);" class="ti-btn ti-btn-light ti-btn-wave "
-                                           data-hs-overlay="#staticBackdrop{{$index}}">Change
+                                           data-hs-overlay="#positionUpdate{{$index}}">Change
                                         </a>
-                                        <div id="staticBackdrop{{$index}}"
+                                        <div id="positionUpdate{{$index}}"
                                              class="hs-overlay hidden ti-modal  [--overlay-backdrop:static]">
                                             <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out">
                                                 <form action="{{route('changeProductPosition')}}" method="post">
@@ -190,7 +351,7 @@
                                                              class="ti-modal-footer ">
                                                             <button type="button"
                                                                     class="hs-dropdown-toggle ti-btn  ti-btn-secondary-full align-middle"
-                                                                    data-hs-overlay="#staticBackdrop{{$index}}">
+                                                                    data-hs-overlay="#positionUpdate{{$index}}">
                                                                 Close
                                                             </button>
                                                             <button class="ti-btn bg-primary text-white !font-medium">
@@ -204,7 +365,6 @@
                                     </td>
                                     <td style="border:1px solid black ;text-align: center">{{$product->promotion}}</td>
                                     <td style="border:1px solid black ;text-align: center">
-
                                         <a style="color:red" href="javascript:void(0);" class=" "
                                            data-hs-overlay="#productDelete{{$index}}">
                                             <span class="material-symbols-outlined">delete</span>
@@ -217,7 +377,7 @@
                                                         <h6 class="modal-title text-[1rem] font-semibold"></h6>
                                                         <button type="button"
                                                                 class="hs-dropdown-toggle !text-[1rem] !font-semibold !text-defaulttextcolor"
-                                                                data-hs-overlay="#staticBackdrop">
+                                                                data-hs-overlay="#productDelete">
                                                             <span class="sr-only">Close</span>
                                                             <i class="ri-close-line"></i>
                                                         </button>
@@ -247,9 +407,7 @@
                                 </tr>
                             @endforeach
                             </tbody>
-
                         </table>
-
                     </div>
                 </div>
             </div>

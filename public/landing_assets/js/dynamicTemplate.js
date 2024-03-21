@@ -1,48 +1,43 @@
-const divs = document.querySelectorAll('.myDiv')
+const divs = document.querySelectorAll('.myDiv2')
+const featuresButtonclass = document.querySelectorAll('.featuresButton2')
+const template = document.querySelectorAll('.features-template2')
+console.log(featuresButtonclass.length>0)
+console.log(locales)
+console.log(divs)
+if (featuresButtonclass.length > 0) {
+    locales.forEach((el, index) => {
 
-const featuresButtonclass = document.querySelectorAll('.featuresButton')
-const template = document.querySelectorAll('.features-template')
-
-
-locales.forEach((el, index) => {
-    const featuresButton1 = document.getElementById('featuresButton' + locales[index]['abbr']);
-
-    // if (featuresButton1) {
-    featuresButtonclass[index].addEventListener("click", function () {
-
+        featuresButtonclass[index].addEventListener("click", function () {
+            console.log('clicked');
             // var template = document.getElementById("features-template" + locales[index]['abbr']);
-
-            var clonedTemplate = document.importNode(template[index+1].content, true);
-
-                divs[index+1].appendChild(clonedTemplate);
-
+            var clonedTemplate = document.importNode(template[index].content, true);
+            divs[index].appendChild(clonedTemplate);
+            var clonedTemplate2 = document.importNode(template[index+1].content, true);
+            divs[index+1].appendChild(clonedTemplate2);
         });
 
 
-// Delegate the event outside of the click event handler
-        document.getElementById("myDiv" + locales[index]['abbr']).addEventListener("click", function (e) {
-            if (e.target.classList.contains("removeButton" + locales[index]['abbr'])) {
-                // Remove the parent node (the div containing the feature)
-                e.target.closest("div").remove();
-                console.log('clicked');
-            }
+
+        if (document.getElementById("myDiv" + locales[index]['abbr']) !== null) {
+            document.getElementById("myDiv" + locales[index]['abbr']).addEventListener("click", function (e) {
+                if (e.target.classList.contains("removeButton" + locales[index]['abbr'])) {
+                    // Remove the parent node (the div containing the feature)
+                    e.target.closest("div").remove();
+                    console.log('clicked');
+                }
+            });
+        }
+    })
+}
 
 
-        });
-    // }
 
-
-})
-
-
-//  All products Page
+// ============= All products Page  ==================
 
 const featuresButton = document.querySelectorAll('.featuresButton')
 const myDivs = document.querySelectorAll('.myDiv')
-const featuresTemplate = document.querySelectorAll('.features-template')
+const featuresTemplate = document.querySelectorAll('.features-template2')
 
-
-console.log(featuresButton)
 featuresButton.forEach((el, index) => {
     el.addEventListener('click', function () {
 
@@ -51,8 +46,6 @@ featuresButton.forEach((el, index) => {
 
     });
 });
-
-
 myDivs.forEach((el, index) => {
 
     el.addEventListener('click', function (e) {

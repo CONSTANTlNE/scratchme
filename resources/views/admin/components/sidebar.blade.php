@@ -73,6 +73,18 @@
                         <li class="slide">
                             <a href="{{route('allProduct')}}" class="side-menu__item">All Products</a>
                         </li>
+                        <li class="slide">
+                            <a href="{{route('faq')}}" class="side-menu__item">FAQ</a>
+                        </li>
+                        <li class="slide">
+                            <a href="{{route('discounts')}}" class="side-menu__item">Manage Discounts</a>
+                        </li>
+                        <li class="slide">
+                            <a href="{{route('orders')}}" class="side-menu__item">Orders</a>
+                        </li>
+                        <li class="slide">
+                            <a href="{{route('delivery')}}" class="side-menu__item">Delivery</a>
+                        </li>
                     </ul>
                 </li>
 

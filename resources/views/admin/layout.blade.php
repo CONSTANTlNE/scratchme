@@ -42,8 +42,8 @@
     <!-- Tom Select Css -->
     {{--    <link rel="stylesheet" href="{{asset('assets/libs/tom-select/css/tom-select.default.min.css')}}">--}}
     <!-- Quill Editor -->
-    <link rel="stylesheet" href="{{asset('assets/libs/quill/quill.snow.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/libs/quill/quill.bubble.css')}}">
+
+    <link href="{{asset('landing_assets/css/glightbox.min.css')}}" rel="stylesheet"/>
 
     <style>
         .draggable-lang {
@@ -887,7 +887,7 @@
 
 <!-- Loader -->
 <div id="loader">
-    {{--    <img src="../assets/images/media/loader.svg" alt=""/>--}}
+{{--        <img src="../assets/images/media/loader.svg" alt=""/>--}}
 </div>
 <!-- Loader -->
 <div class="page">
@@ -908,13 +908,17 @@
             @yield('staticTranslation')
             @yield('products')
             @yield('all-products')
-
+            @yield('faq')
+            @yield('discounts')
+            @yield('admin-orders')
+            @yield('delivery')
         </div>
     </div>
     <!-- End::content  -->
 
 
     <!-- ========== Search Modal ========== -->
+
     <!-- ========== END Search Modal ========== -->
 
 
@@ -977,6 +981,9 @@
 <!-- datatables.net JS -->
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
+
+<script src="{{asset('landing_assets/js/glightbox.min.js')}}"></script>
+<script src="{{asset('landing_assets/js/custom-glightbox.js')}}"></script>
 {{--<!-- Quill Editor JS -->--}}
 {{--<script src="{{asset('assets/libs/quill/quill.min.js')}}"></script>--}}
 
@@ -988,6 +995,8 @@
     new DataTable('#static-lang');
 
     new DataTable('#products-table')
+    new DataTable('#coupon-table')
+    new DataTable('#orders-table')
 
 </script>
 <!-- Tom Select JS -->
@@ -1210,22 +1219,73 @@
 <!-- Photo upload-->
 <script>
 
-    const uploadProfileImage=document.getElementById('uploadProfileImage');
-    uploadProfileImage.addEventListener('click', function() {
-        document.getElementById('imageInput').click();
-    });
+    // const uploadProfileImage=document.getElementById('uploadProfileImage');
+    // console.log(uploadProfileImage)
+    // if(uploadProfileImage!==null){
+    //     uploadProfileImage.addEventListener('click', function() {
+    //         document.getElementById('imageInput').click();
+    //     });
+    //
+    //     document.getElementById('imageInput').addEventListener('change', function() {
+    //         const input = this;
+    //         if (input.files && input.files[0]) {
+    //             const reader = new FileReader();
+    //             reader.onload = function (e) {
+    //                 document.getElementById('imagePreview').src = e.target.result;
+    //                 document.getElementById('imagePreview').style.display = 'block';
+    //             }
+    //             reader.readAsDataURL(input.files[0]);
+    //         }
+    //     });
+    // }
+    //
 
-    document.getElementById('imageInput').addEventListener('change', function() {
-        const input = this;
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('imagePreview').src = e.target.result;
-                document.getElementById('imagePreview').style.display = 'block';
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    });
+    const uploadProfileImage=document.querySelectorAll('.uploadProfileImage');
+    const imagePreview=document.querySelectorAll('.imagePreview')
+    const imageInput=document.querySelectorAll('.imageInput')
+
+
+
+    if(uploadProfileImage!==null) {
+
+        uploadProfileImage.forEach((el, index) => {
+            el.addEventListener('click', function () {
+                console.log(imageInput[index])
+                imageInput[index].click()
+  console.log('clicked')
+                imageInput[index].addEventListener('change', function () {
+                    const input = this;
+                    if (input.files && input.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            imagePreview[index].src = e.target.result;
+                            imagePreview[index].style.display = 'block';
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                })
+            });
+
+
+        });
+    }
+        // uploadProfileImage.addEventListener('click', function() {
+        //     document.getElementById('imageInput').click();
+        // });
+        //
+        // document.getElementById('imageInput').addEventListener('change', function() {
+        //     const input = this;
+        //     if (input.files && input.files[0]) {
+        //         const reader = new FileReader();
+        //         reader.onload = function (e) {
+        //             document.getElementById('imagePreview').src = e.target.result;
+        //             document.getElementById('imagePreview').style.display = 'block';
+        //         }
+        //         reader.readAsDataURL(input.files[0]);
+        //     }
+        // });
+
+
 </script>
 
 {{-- All Products Edit--}}
@@ -1261,7 +1321,38 @@
     const locales = @json($locales);
 </script>
 
+
 <script src="{{asset('landing_assets/js/dynamicTemplate.js')}}"></script>
 
+{{--Discounts--}}
+<script>
+    const activeGenDiscount=document.querySelectorAll('.activeGenDiscount')
+    const genDiscountForm=document.querySelectorAll('.gendiscountForm')
+
+    activeGenDiscount.forEach((el, index) => {
+        el.addEventListener('change', function() {
+            if (genDiscountForm) {
+                genDiscountForm[index].submit();
+            }
+        });
+    });
+
+
+    const activeCouponDiscount=document.querySelectorAll('.activeCouponDiscount')
+    const couponDiscountForm=document.querySelectorAll('.couponDiscountForm')
+
+    activeCouponDiscount.forEach((el, index) => {
+        el.addEventListener('change', function() {
+            if (couponDiscountForm) {
+                couponDiscountForm[index].submit();
+            }
+        });
+    });
+
+
+
+
+
+</script>
 </body>
 </html>

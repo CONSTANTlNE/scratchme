@@ -6,6 +6,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\Language;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -22,25 +23,30 @@ class FortifyServiceProvider extends ServiceProvider
     public function register(): void
     {
         Fortify::loginView(function () {
-            return view('auth.login');
+            $languages = Language::all();
+            return view('auth.login', compact('languages'));
         });
 
         Fortify::registerView(function () {
-            return view('auth.register');
+            $languages = Language::all();
+            return view('auth.register', compact('languages'));
         });
 
         //View with email input to send password reset link
         Fortify::requestPasswordResetLinkView(function () {
-            return view('auth.forgot-password');
+            $languages = Language::all();
+            return view('auth.forgot-password', compact('languages'));
         });
 
         //View with two email inputs for new password
         Fortify::resetPasswordView(function ($request) {
-            return view('auth.reset-password', ['request' => $request]);
+            $languages = Language::all();
+            return view('auth.reset-password', ['request' => $request], compact('languages'));
         });
 
         Fortify::verifyEmailView(function () {
-            return view('auth.verify-email');
+            $languages = Language::all();
+            return view('auth.verify-email',compact('languages'));
         });
 
     }

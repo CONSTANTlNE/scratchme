@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
-            $table->float('price')->default(0.00);
-            $table->boolean('promotion')->default(false);
-            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->float('price');
+            $table->boolean('discount_active')->nullable();
+            $table->integer('discount')->nullable();
+            $table->foreignId('product_id')->constrained();
             $table->timestamps();
         });
     }

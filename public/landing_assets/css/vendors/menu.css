@@ -44,15 +44,19 @@
 
 .site-header {
   background-color: transparent;
+  position: fixed;
+  top: 0;
+  width: 100%;
+    z-index: 999;
 }
 
-.site-header--absolute {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 999;
-}
+/*.site-header--absolute {*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  width: 100%;*/
+/*  z-index: 999;*/
+/*}*/
 
 .site-header--sticky:not(.mobile-sticky-enable) {
   position: absolute !important;

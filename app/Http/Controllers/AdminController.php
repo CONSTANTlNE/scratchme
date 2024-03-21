@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CouponDiscount;
+use App\Models\Delivery;
+use App\Models\DeliveryPrice;
 use App\Models\Language;
+use App\Models\Order;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -285,9 +291,63 @@ class AdminController extends Controller
     public function htmxTest(Request $request)
     {
 
-
         $languages = Language::orderBy('position', 'asc')->get();
 
         return view('admin.localization.htmx', compact('languages',));
     }
+
+
+    public function allOrders(Request $request){
+
+        $OrderProduct=OrderProduct::with('prices','order.couponDiscount')->get();
+        $locales = Language::all()->toArray();
+        $orders=Order::with('products','couponDiscount','user','delivery.prices')->get();
+
+
+        return view('admin.pages.orders',compact('orders','locales','OrderProduct'));
+    }
+
+
+    public function singleOrder(Request $request,$locale,$orderID,$user){
+
+//        dd($order,$user);
+        $orderproduct=OrderProduct::where('order_id',$orderID)
+            ->with('prices','orderproducts.prices','order.couponDiscount',)
+            ->get();
+
+//        $order=Order::with('products','couponDiscount','user','delivery.prices')->where('id',$orderID)->where('user_id',$user)->first();
+//        $couponDiscounts = CouponDiscount::where('id', $order->coupon_discount_id)->first();
+
+//        $quantities = DB::table('order_product')
+//            ->where('order_id', $order->id)->get();
+
+        $locales = Language::all()->toArray();
+
+        return view('admin.pages.single-order', compact('locales', 'orderproduct', ));
+
+    }
+
+    public function delivery (Request $request){
+
+        $locales = Language::all()->toArray();
+        $deliveries = Delivery::with('prices')->get();
+
+        return view('admin.pages.delivery',compact('deliveries','locales'));
+    }
+
+    public function createDelivery(Request $request){
+
+        $delivery = new Delivery();
+        $delivery->title = $request->delivery_name;
+        $delivery->save();
+
+        $price = new DeliveryPrice();
+        $price->delivery_id = $delivery->id;
+        $price->price = $request->delivery_price;
+        $price->save();
+
+        return back();
+
+    }
 }
+

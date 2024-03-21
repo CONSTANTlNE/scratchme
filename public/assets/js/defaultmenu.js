@@ -272,7 +272,10 @@ let headerToggleBtn, WindowPreSize;
 (() => {
   let html = document.querySelector("html");
   headerToggleBtn = document.querySelector(".sidemenu-toggle");
-  headerToggleBtn.addEventListener("click", toggleSidemenu);
+  if(headerToggleBtn){
+    headerToggleBtn.addEventListener("click", toggleSidemenu);
+
+  }
   let mainContent = document.querySelector(".main-content");
   if (window.innerWidth <= 992) {
     mainContent.addEventListener("click", menuClose);
@@ -770,136 +773,140 @@ function switcherArrowFn() {
 }
 let slideLeft = document.querySelector(".slide-left");
 let slideRight = document.querySelector(".slide-right");
-slideLeft.addEventListener("click", () => {
-  let menuNav = document.querySelector(".main-menu");
-  let mainContainer1 = document.querySelector(".main-sidebar");
-  let marginLeftValue = Math.ceil(
-    Number(window.getComputedStyle(menuNav).marginLeft.split("px")[0])
-  );
-  let marginRightValue = Math.ceil(
-    Number(window.getComputedStyle(menuNav).marginRight.split("px")[0])
-  );
-  let mainContainer1Width = mainContainer1.offsetWidth;
-  if (menuNav.scrollWidth > mainContainer1.offsetWidth) {
-    if (!(document.querySelector("html").getAttribute("dir") === "rtl")) {
-      if (
-        marginLeftValue < 0 &&
-        !(Math.abs(marginLeftValue) < mainContainer1Width)
-      ) {
-        menuNav.style.marginRight = 0;
-        menuNav.style.marginLeft =
-          Number(menuNav.style.marginLeft.split("px")[0]) +
-          Math.abs(mainContainer1Width) +
-          "px";
-        slideRight.classList.remove("hidden");
-      } else if (marginLeftValue >= 0) {
-        menuNav.style.marginLeft = "0px";
-        slideLeft.classList.add("hidden");
-        slideRight.classList.remove("hidden");
+
+if(slideRight){
+  slideLeft.addEventListener("click", () => {
+    let menuNav = document.querySelector(".main-menu");
+    let mainContainer1 = document.querySelector(".main-sidebar");
+    let marginLeftValue = Math.ceil(
+        Number(window.getComputedStyle(menuNav).marginLeft.split("px")[0])
+    );
+    let marginRightValue = Math.ceil(
+        Number(window.getComputedStyle(menuNav).marginRight.split("px")[0])
+    );
+    let mainContainer1Width = mainContainer1.offsetWidth;
+    if (menuNav.scrollWidth > mainContainer1.offsetWidth) {
+      if (!(document.querySelector("html").getAttribute("dir") === "rtl")) {
+        if (
+            marginLeftValue < 0 &&
+            !(Math.abs(marginLeftValue) < mainContainer1Width)
+        ) {
+          menuNav.style.marginRight = 0;
+          menuNav.style.marginLeft =
+              Number(menuNav.style.marginLeft.split("px")[0]) +
+              Math.abs(mainContainer1Width) +
+              "px";
+          slideRight.classList.remove("hidden");
+        } else if (marginLeftValue >= 0) {
+          menuNav.style.marginLeft = "0px";
+          slideLeft.classList.add("hidden");
+          slideRight.classList.remove("hidden");
+        } else {
+          menuNav.style.marginLeft = "0px";
+          slideLeft.classList.add("hidden");
+          slideRight.classList.remove("hidden");
+        }
       } else {
-        menuNav.style.marginLeft = "0px";
-        slideLeft.classList.add("hidden");
-        slideRight.classList.remove("hidden");
+        if (
+            marginRightValue < 0 &&
+            !(Math.abs(marginRightValue) < mainContainer1Width)
+        ) {
+          menuNav.style.marginLeft = 0;
+          menuNav.style.marginRight =
+              Number(menuNav.style.marginRight.split("px")[0]) +
+              Math.abs(mainContainer1Width) +
+              "px";
+          slideRight.classList.remove("hidden");
+        } else if (marginRightValue >= 0) {
+          menuNav.style.marginRight = "0px";
+          slideLeft.classList.add("hidden");
+          slideRight.classList.remove("hidden");
+        } else {
+          menuNav.style.marginRight = "0px";
+          slideLeft.classList.add("hidden");
+          slideRight.classList.remove("hidden");
+        }
       }
     } else {
-      if (
-        marginRightValue < 0 &&
-        !(Math.abs(marginRightValue) < mainContainer1Width)
-      ) {
-        menuNav.style.marginLeft = 0;
-        menuNav.style.marginRight =
-          Number(menuNav.style.marginRight.split("px")[0]) +
-          Math.abs(mainContainer1Width) +
-          "px";
-        slideRight.classList.remove("hidden");
-      } else if (marginRightValue >= 0) {
-        menuNav.style.marginRight = "0px";
-        slideLeft.classList.add("hidden");
-        slideRight.classList.remove("hidden");
+      document.querySelector(".main-menu").style.marginLeft = "0px";
+      document.querySelector(".main-menu").style.marginRight = "0px";
+    }
+    let element = document.querySelector(".main-menu > .slide.open")
+    let element1 = document.querySelector(".main-menu > .slide.open >ul")
+    if(element){
+      element.classList.remove("active")
+    }
+    if(element1){
+      element1 .style.display = "none"
+    }
+
+
+
+    switcherArrowFn();
+    return;
+    //
+  });
+  slideRight.addEventListener("click", () => {
+    let menuNav = document.querySelector(".main-menu");
+    let mainContainer1 = document.querySelector(".main-sidebar");
+    let marginLeftValue = Math.ceil(
+        Number(window.getComputedStyle(menuNav).marginLeft.split("px")[0])
+    );
+    let marginRightValue = Math.ceil(
+        Number(window.getComputedStyle(menuNav).marginRight.split("px")[0])
+    );
+    let check = menuNav.scrollWidth - mainContainer1.offsetWidth;
+    let mainContainer1Width = mainContainer1.offsetWidth;
+
+    if (menuNav.scrollWidth > mainContainer1.offsetWidth) {
+      if (!(document.querySelector("html").getAttribute("dir") === "rtl")) {
+        if (Math.abs(check) > Math.abs(marginLeftValue)) {
+          menuNav.style.marginRight = 0;
+          if (
+              !(Math.abs(check) > Math.abs(marginLeftValue) + mainContainer1Width)
+          ) {
+            mainContainer1Width = Math.abs(check) - Math.abs(marginLeftValue);
+            slideRight.classList.add("hidden");
+          }
+          menuNav.style.marginLeft =
+              Number(menuNav.style.marginLeft.split("px")[0]) -
+              Math.abs(mainContainer1Width) +
+              "px";
+          slideLeft.classList.remove("hidden");
+        }
       } else {
-        menuNav.style.marginRight = "0px";
-        slideLeft.classList.add("hidden");
-        slideRight.classList.remove("hidden");
+        if (Math.abs(check) > Math.abs(marginRightValue)) {
+          menuNav.style.marginLeft = 0;
+          if (
+              !(Math.abs(check) > Math.abs(marginRightValue) + mainContainer1Width)
+          ) {
+            mainContainer1Width = Math.abs(check) - Math.abs(marginRightValue);
+            slideRight.classList.add("hidden");
+          }
+          menuNav.style.marginRight =
+              Number(menuNav.style.marginRight.split("px")[0]) -
+              Math.abs(mainContainer1Width) +
+              "px";
+          slideLeft.classList.remove("hidden");
+        }
       }
     }
-  } else {
-    document.querySelector(".main-menu").style.marginLeft = "0px";
-    document.querySelector(".main-menu").style.marginRight = "0px";
-  }
-  let element = document.querySelector(".main-menu > .slide.open")
-      let element1 = document.querySelector(".main-menu > .slide.open >ul")
-      if(element){
-        element.classList.remove("active")
-      }
-      if(element1){
-        element1 .style.display = "none"
-      }
-
-
-
-  switcherArrowFn();
-  return;
-  //
-});
-slideRight.addEventListener("click", () => {
-  let menuNav = document.querySelector(".main-menu");
-  let mainContainer1 = document.querySelector(".main-sidebar");
-  let marginLeftValue = Math.ceil(
-    Number(window.getComputedStyle(menuNav).marginLeft.split("px")[0])
-  );
-  let marginRightValue = Math.ceil(
-    Number(window.getComputedStyle(menuNav).marginRight.split("px")[0])
-  );
-  let check = menuNav.scrollWidth - mainContainer1.offsetWidth;
-  let mainContainer1Width = mainContainer1.offsetWidth;
-
-  if (menuNav.scrollWidth > mainContainer1.offsetWidth) {
-    if (!(document.querySelector("html").getAttribute("dir") === "rtl")) {
-      if (Math.abs(check) > Math.abs(marginLeftValue)) {
-        menuNav.style.marginRight = 0;
-        if (
-          !(Math.abs(check) > Math.abs(marginLeftValue) + mainContainer1Width)
-        ) {
-          mainContainer1Width = Math.abs(check) - Math.abs(marginLeftValue);
-          slideRight.classList.add("hidden");
-        }
-        menuNav.style.marginLeft =
-          Number(menuNav.style.marginLeft.split("px")[0]) -
-          Math.abs(mainContainer1Width) +
-          "px";
-        slideLeft.classList.remove("hidden");
-      }
-    } else {
-      if (Math.abs(check) > Math.abs(marginRightValue)) {
-        menuNav.style.marginLeft = 0;
-        if (
-          !(Math.abs(check) > Math.abs(marginRightValue) + mainContainer1Width)
-        ) {
-          mainContainer1Width = Math.abs(check) - Math.abs(marginRightValue);
-          slideRight.classList.add("hidden");
-        }
-        menuNav.style.marginRight =
-          Number(menuNav.style.marginRight.split("px")[0]) -
-          Math.abs(mainContainer1Width) +
-          "px";
-        slideLeft.classList.remove("hidden");
-      }
+    let element = document.querySelector(".main-menu > .slide.open")
+    let element1 = document.querySelector(".main-menu > .slide.open >ul")
+    if(element){
+      element.classList.remove("active")
     }
-  }
-  let element = document.querySelector(".main-menu > .slide.open")
-      let element1 = document.querySelector(".main-menu > .slide.open >ul")
-      if(element){
-        element.classList.remove("active")
-      }
-      if(element1){
-        element1 .style.display = "none"
-      }
+    if(element1){
+      element1 .style.display = "none"
+    }
 
 
 
-  switcherArrowFn();
-  return;
-});
+    switcherArrowFn();
+    return;
+  });
+}
+
 function checkHoriMenu() {
   let menuNav = document.querySelector(".main-menu");
   let mainContainer1 = document.querySelector(".main-sidebar");

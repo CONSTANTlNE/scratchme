@@ -22,7 +22,7 @@ class SetLocale
         $main=Language::where('main',1)->pluck('abbr');
 //        dd($main);
         $locale=$request->segment(1);
-        if (in_array($locale, $langs, )) {
+        if (in_array($locale, $langs)) {
             app()->setLocale($request->segment(1));
             URL::defaults(['locale' => $request->segment(1)]);
         } else{
