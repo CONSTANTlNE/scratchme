@@ -2,6 +2,9 @@
 
 // ::::: GLobal Javascript ::::
 // ================================Animate Interaction on Scroll ==================================
+import JOS from "./vendors/jos.min.js";
+import Swiper from "./vendors/swiper-bundle.min.js";
+
 JOS.init({
   // disable: false, // Disable JOS gloabaly | Values :  'true', 'false'
   // debugMode: true, // Enable JOS debug mode | Values :  'true', 'false'
@@ -29,10 +32,12 @@ JOS.init({
 let accordions = document.querySelectorAll(".accordion-item");
 accordions.forEach((item) => {
   let label = item.querySelector(".accordion-header");
+
+
   label.addEventListener("click", () => {
-    accordions.forEach((accordionItem) => {
-      accordionItem.classList.remove("active");
-    });
+    // accordions.forEach((accordionItem) => {
+    //   accordionItem.classList.remove("active");
+    // });
     item.classList.toggle("active");
   });
 });

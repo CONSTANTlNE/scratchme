@@ -29,10 +29,12 @@
                                 <th style="border:1px solid black ;text-align: center">Delivery Address</th>
                                 <th style="border:1px solid black ;text-align: center">Coupon</th>
                                 <th style="border:1px solid black ;text-align: center">Details</th>
+                                <th style="border:1px solid black ;text-align: center">Make payment</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($orders as $index => $order)
+
                                 <tr>
                                     <td style="text-align: center">
                                         {{$order->created_at}}
@@ -42,24 +44,25 @@
                                             <p style="color: red">Cart created</p>
                                         @else
                                             <p style="color: green">Paid</p>
+                                            {{$order->payment->created_at}}
                                         @endif
                                     </td>
                                     <td style="text-align: center">
 
                                     </td>
-                                    <td style="text-align: center">
+                                    <td class="total{{$index}}" style="text-align: center">
                                         @php $total=0 @endphp
                                         @if($order->couponDiscount === null)
                                             @foreach($OrderProduct as $index => $item)
-                                                {{--                                            @php dd($item) @endphp--}}
+                                                {{-- @php dd($item) @endphp--}}
                                                 @if($item->order_id === $order->id )
-                                                    {{$item->quantity*$item->prices->price+$order->delivery->prices->last()->price}}
+                                                    {{$total=$item->quantity*$item->prices->price+$order->delivery->prices->last()->price}}
                                                 @endif
                                             @endforeach
                                         @else
-{{--                                               @php dd($item) @endphp--}}
-
-                                            {{$item->quantity*$item->prices->whereNull('discount')->first()->price*(1-$order->couponDiscount->discount/100)+$order->delivery->prices->last()->price}}
+                                            @foreach($OrderProduct as $item)
+                                            {{$total=$item->quantity*$item->prices->price*(1-$order->couponDiscount->discount/100)+$order->delivery->prices->last()->price}}
+                                            @endforeach
                                         @endif
                                     </td>
                                     <td style="text-align: center">
@@ -88,6 +91,14 @@
                                         <a target="_blank"
                                            href="{{route('singleOrder',['order'=>$order->id,'user'=>$order->user->id])}}">Details</a>
 
+                                    </td>
+                                    <td style="text-align: center">
+                                        <form action="{{route('manualPayment')}}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="order_id" value="{{$order->id}}">
+                                            <input type="hidden" name="amount" value="{{$total}}">
+                                            <input type="submit" value="Payment">
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

@@ -89,12 +89,16 @@
                                     <td style="border:1px solid black ;text-align: center">
                                         @foreach($product->media as $img)
                                             <a href="{{$img->getUrl()}}" class="defaultGlightbox">
-                                            @if($loop->first)
-                                                <img style="height: 180px;width: 100%;min-width: 130px"
-                                                     src="{{$img->getUrl()}}">
-                                            @endif
+                                                @if($loop->first)
+                                                    <img style="height: 180px;width: 100%;min-width: 130px"
+                                                         src="{{$img->getUrl()}}">
+                                                @endif
                                             </a>
                                         @endforeach
+                                            <a href="{{route('changePhoto',['id'=>$product->id])}}" target="_blank" class="ti-btn ti-btn-light ti-btn-wave"
+                                               >Change
+                                            </a>
+
                                     </td>
 
                                     <td style="border:1px solid black ;text-align: center">
@@ -270,38 +274,38 @@
                                     </td>
                                     <td style="border:1px solid black ;text-align: center">
                                         <p class="mb-2">{{ $product->prices()->whereNull('discount')->latest()->first()->price}}</p>
-                                        @if($product->prices->last()->discount===null)
-                                            <a href="javascript:void(0);" class="ti-btn ti-btn-light ti-btn-wave "
-                                               data-hs-overlay="#staticBackdrop{{$index}}">Change
-                                            </a>
-                                            <div id="staticBackdrop{{$index}}"
-                                                 class="hs-overlay hidden ti-modal  [--overlay-backdrop:static]">
-                                                <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out">
-                                                    <form action="{{route('priceUpdate')}}" method="post">
-                                                        @csrf
-                                                        <div style="max-width: 250px" class="ti-modal-content ">
-                                                            <div style="max-width: 100px!important"
-                                                                 class="ti-modal-body px-4 m-auto">
-                                                                <input type="hidden" name="id"
-                                                                       value="{{$product->id}}">
-                                                                <input class="form-control" name="newprice" type="text">
-                                                            </div>
-                                                            <div style="display: flex!important;justify-content: center!important;"
-                                                                 class="ti-modal-footer ">
-                                                                <button type="button"
-                                                                        class="hs-dropdown-toggle ti-btn  ti-btn-secondary-full align-middle"
-                                                                        data-hs-overlay="#staticBackdrop{{$index}}">
-                                                                    Close
-                                                                </button>
-                                                                <button class="ti-btn bg-primary text-white !font-medium">
-                                                                    change
-                                                                </button>
-                                                            </div>
+                                        {{--                                        @if($product->prices->last()->discount===null)--}}
+                                        <a href="javascript:void(0);" class="ti-btn ti-btn-light ti-btn-wave "
+                                           data-hs-overlay="#staticBackdrop{{$index}}">Change
+                                        </a>
+                                        <div id="staticBackdrop{{$index}}"
+                                             class="hs-overlay hidden ti-modal  [--overlay-backdrop:static]">
+                                            <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out">
+                                                <form action="{{route('priceUpdate')}}" method="post">
+                                                    @csrf
+                                                    <div style="max-width: 250px" class="ti-modal-content ">
+                                                        <div style="max-width: 100px!important"
+                                                             class="ti-modal-body px-4 m-auto">
+                                                            <input type="hidden" name="id"
+                                                                   value="{{$product->id}}">
+                                                            <input class="form-control" name="newprice" type="text">
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                        <div style="display: flex!important;justify-content: center!important;"
+                                                             class="ti-modal-footer ">
+                                                            <button type="button"
+                                                                    class="hs-dropdown-toggle ti-btn  ti-btn-secondary-full align-middle"
+                                                                    data-hs-overlay="#staticBackdrop{{$index}}">
+                                                                Close
+                                                            </button>
+                                                            <button class="ti-btn bg-primary text-white !font-medium">
+                                                                change
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        @endif
+                                        </div>
+                                        {{--                                        @endif--}}
                                     </td>
                                     <td style="border:1px solid black ;text-align: center">
                                         @if($product->prices->last()->discount!=null)

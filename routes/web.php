@@ -5,14 +5,17 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\TermController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\SocialiteController;
 use App\Models\Language;
 use Illuminate\Support\Facades\Route;
 
 // ======== Fortify ==============
+use Illuminate\Support\Str;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
@@ -53,6 +56,19 @@ use Laravel\Fortify\RoutePath;
 //    ->group(function () {
 Route::get('/test', [TestController::class, 'index'])->name('test');
 //    });
+Route::get('/test2', function () {
+$rand1=Str::upper(Str::random(3, 'abcdefghijklmnopqrstuvwxyz'));
+$rand=random_int(156,999);
+$code=$rand1.'-'.$rand;
+
+//    while (YourModel::where('unique_code', $code)->exists()) {
+//        // If the code already exists, generate a new one
+//        $code = Str::random(6, '0123456789');
+//    }
+
+    return $code;
+
+})->name('test2');
 
 
 Route::get('/', function () {
@@ -64,20 +80,26 @@ $main=Language::where('main',1)->pluck('abbr');
 })->name('home');
 
 
+// No Auth General Routes
 Route::prefix('{locale?}')
     ->where(['locale' => '[a-zA-Z]{2}'])
     ->middleware('Setlocale')
     ->group(function () {
         Route::get('/', [LandingController::class, 'index'])->name('index');
         Route::get('/scratch/all', [LandingController::class, 'allProducts'])->name('allproduct');
+        Route::get('/scratch/about', [LandingController::class, 'about'])->name('about');
+        Route::get('/scratch/terms', [LandingController::class, 'terms'])->name('landingterms');
         Route::get('/scratch/{product}', [LandingController::class, 'productDetails'])->name('productDetails');
+
     });
 
 
 
+// ADMIN ROUTES
+
 Route::prefix('{locale?}')
     ->where(['locale' => '[a-zA-Z]{2}'])
-    ->middleware(['auth', 'Setlocale']) // <-- Add the middleware
+    ->middleware(['auth', 'Setlocale','role:admin']) // <-- Add the middleware
     ->group(function () {
         Route::get('/admin', [AdminController::class, 'adminMain'])->name('adminMain');
 
@@ -107,10 +129,10 @@ Route::prefix('{locale?}')
         Route::post('/admin/delivery/update', [AdminController::class, 'updateDelivery'])->name('updateDelivery');
 
 
-
         // Admin Order
         Route::get('/admin/orders', [AdminController::class, 'allOrders'])->name('orders');
         Route::get('/admin/order/{order}/{user}', [AdminController::class, 'singleOrder'])->name('singleOrder');
+        Route::post('/admin/manualPayment', [PaymentController::class, 'manualPayment'])->name('manualPayment');
 
 
         // Products
@@ -132,6 +154,8 @@ Route::prefix('{locale?}')
             [ProductController::class, 'updateLongDescr'])->name('updateLongDescr');
         Route::post('/admin/product/prodname/update',
             [ProductController::class, 'updateProdName'])->name('updateProdName');
+        Route::get('/admin/product/change-photo/{id}', [ProductController::class, 'changePhoto'])->name('changePhoto');
+        Route::post('/admin/product/photos/update', [ProductController::class, 'updatePhotos'])->name('updatePhotos');
 
         Route::post('/admin/product/store', [ProductController::class, 'store'])->name('storeProduct');
         Route::post('/admin/product/update', [ProductController::class, 'update'])->name('updateProduct');
@@ -148,12 +172,36 @@ Route::prefix('{locale?}')
         Route::post('/admin/discounts/applycoupon', [OrderController::class, 'applyCoupon'])->name('applyCoupon');
 
 
-
         // FAQ
         Route::get('/admin/faq', [FaqController::class, 'index'])->name('faq');
         Route::post('/admin/faq/update', [FaqController::class, 'updateFaq'])->name('updateFaq');
         Route::post('/admin/faq/create', [FaqController::class, 'createFaq'])->name('createFaq');
         Route::post('/admin/faq/delete', [FaqController::class, 'faqDelete'])->name('faqDelete');
+
+        // About
+        Route::get('/admin/about', [AdminController::class, 'aboutUs'])->name('aboutUs');
+        Route::post('/admin/about/create', [AdminController::class, 'createAbout'])->name('createAbout');
+        Route::post('/admin/about/update', [AdminController::class, 'updateAbout'])->name('updateAbout');
+        Route::post('/admin/about/status', [AdminController::class, 'aboutStatus'])->name('aboutStatus');
+        Route::post('/admin/about/photo/create', [AdminController::class, 'aboutphoto'])->name('aboutphoto');
+        Route::post('/admin/about/photo/update', [AdminController::class, 'aboutphotoupdate'])->name('aboutphotoupdate');
+
+
+
+        // Terms
+        Route::get('/admin/terms', [AdminController::class, 'terms'])->name('terms');
+        Route::post('/admin/term/create', [TermController::class, 'createTerm'])->name('createTerm');
+        Route::post('/admin/term/delete', [TermController::class, 'deleteTerm'])->name('deleteTerm');
+        Route::post('/admin/term/update', [TermController::class, 'updateTerm'])->name('updateTerm');
+
+    });
+
+
+// User Routes
+Route::prefix('{locale?}')
+    ->where(['locale' => '[a-zA-Z]{2}'])
+    ->middleware(['auth', 'Setlocale']) // <-- Add the middleware
+    ->group(function () {
 
         //Order-Cart
         Route::get('/cart', [OrderController::class, 'index'])->name('cart');
@@ -162,11 +210,14 @@ Route::prefix('{locale?}')
         Route::post('/cart/item/delete', [OrderController::class, 'deleteItem'])->name('deleteItem');
         Route::post('/cart/delivery/order/update', [OrderController::class, 'updateOrderDelivery'])->name('updateOrderDelivery');
 
-
-
         // Purchase
         Route::post('/cart/purchase', [PurchaseController::class, 'createPayment'])->name('createPayment');
         Route::post('/cart/checkout', [PurchaseController::class, 'checkout'])->name('checkout');
+
+
+        // Order History
+        Route::get('/orders', [OrderController::class, 'userOrders'])->name('userOrders');
+        Route::get('/orders/{order}', [OrderController::class, 'orderDetails'])->name('orderDetails');
 
 
 
@@ -218,12 +269,12 @@ Route::group(['middleware' => config('fortify.middleware', ['web', 'Setlocale'])
                 ->name('password.reset');
         }
 
-        Route::post(RoutePath::for('password.email', '/forgot-password'), [PasswordResetLinkController::class, 'store'])
-            ->middleware(['guest:'.config('fortify.guard')])
+        Route::post(RoutePath::for('password.email', '{locale?}/forgot-password'), [PasswordResetLinkController::class, 'store'])
+            ->middleware(['guest:'.config('fortify.guard', ), 'Setlocale'])
             ->name('password.email');
 
-        Route::post(RoutePath::for('password.update', '/reset-password'), [NewPasswordController::class, 'store'])
-            ->middleware(['guest:'.config('fortify.guard')])
+        Route::post(RoutePath::for('password.update', '{locale?}/reset-password'), [NewPasswordController::class, 'store'])
+            ->middleware(['guest:'.config('fortify.guard'), 'Setlocale'])
             ->name('password.update');
     }
 

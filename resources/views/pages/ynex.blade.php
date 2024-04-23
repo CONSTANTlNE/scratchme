@@ -7,22 +7,13 @@
     <title> YNEX - Tailwind Admin Template </title>
     <meta name="description"
           content="A Tailwind CSS admin template is a pre-designed web page for an admin dashboard. Optimizing it for SEO includes using meta descriptions and ensuring it's responsive and fast-loading.">
-    <meta name="keywords"
-          content="html dashboard,tailwind css,tailwind admin dashboard,template dashboard,html and css template,tailwind dashboard,tailwind css templates,admin dashboard html template,tailwind admin,html panel,template tailwind,html admin template,admin panel html">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{asset('assets/images/brand-logos/favicon.ico')}}">
 
-    <!-- Main JS -->
+    <link rel="icon" href="{{asset('landing_assets/scratchme/Yellow-removebg-preview.png')}}" />
+
     <script src="{{asset('assets/js/main.js')}}"></script>
-
-    <!-- Style Css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-
-    <!-- Simplebar Css -->
     <link rel="stylesheet" href="{{asset('assets/libs/simplebar/simplebar.min.css')}}">
-
-    <!-- Color Picker Css -->
     <link rel="stylesheet" href="{{asset('assets/libs/@simonwep/pickr/themes/nano.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/libs/sweetalert2/sweetalert2.min.css')}}">
     <script>
@@ -522,6 +513,7 @@
         <div class="main-content">
             @yield('cart')
             @yield('checkout')
+            @yield('user-orders')
 
         </div>
     </div>
@@ -584,9 +576,12 @@
     const deliveryForm = document.getElementById('deliveryForm');
 
     // Add an event listener for the 'change' event
-    deliverySelect.addEventListener('change', function() {
-deliveryForm.submit();
-    });
+    if(deliverySelect!==null){
+        deliverySelect.addEventListener('change', function() {
+            deliveryForm.submit();
+        });
+    }
+
 
 
     addQty.forEach((el, index) => {

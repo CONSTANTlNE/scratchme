@@ -391,9 +391,11 @@ function toggleSidemenu() {
 
   if (window.innerWidth >= 992) {
     if (sidemenuType === "vertical") {
-      sidebar.removeEventListener("mouseenter", mouseEntered);
-      sidebar.removeEventListener("mouseleave", mouseLeave);
-      sidebar.removeEventListener("click", icontextOpen);
+      if(sidebar!==null) {
+        sidebar.removeEventListener("mouseenter", mouseEntered);
+        sidebar.removeEventListener("mouseleave", mouseLeave);
+        sidebar.removeEventListener("click", icontextOpen);
+      }
       mainContentDiv.removeEventListener("click", icontextClose);
       let sidemenulink = document.querySelectorAll(
         ".main-menu li > .side-menu__item"
@@ -418,16 +420,24 @@ function toggleSidemenu() {
           html.removeAttribute("data-nav-style");
           if (html.getAttribute("data-toggled") === "icon-overlay-close") {
             html.removeAttribute("data-toggled", "icon-overlay-close");
-            sidebar.removeEventListener("mouseenter", mouseEntered);
-            sidebar.removeEventListener("mouseleave", mouseLeave);
+            if(sidebar!==null) {
+              sidebar.removeEventListener("mouseenter", mouseEntered);
+              sidebar.removeEventListener("mouseleave", mouseLeave);
+            }
           } else {
             if (window.innerWidth >= 992) {
               html.setAttribute("data-toggled", "icon-overlay-close");
-              sidebar.addEventListener("mouseenter", mouseEntered);
-              sidebar.addEventListener("mouseleave", mouseLeave);
+              if(sidebar!==null){
+                sidebar.addEventListener("mouseenter", mouseEntered);
+                sidebar.addEventListener("mouseleave", mouseLeave);
+              }
+
             } else {
-              sidebar.removeEventListener("mouseenter", mouseEntered);
-              sidebar.removeEventListener("mouseleave", mouseLeave);
+              if(sidebar!==null){
+                sidebar.removeEventListener("mouseenter", mouseEntered);
+                sidebar.removeEventListener("mouseleave", mouseLeave);
+              }
+
             }
           }
           break;
@@ -909,15 +919,21 @@ if(slideRight){
 
 function checkHoriMenu() {
   let menuNav = document.querySelector(".main-menu");
+
   let mainContainer1 = document.querySelector(".main-sidebar");
   let slideLeft = document.querySelector(".slide-left");
   let slideRight = document.querySelector(".slide-right");
+  if (menuNav!==null) {
+    menuNav.style.marginLeft = "0px";
+    menuNav.style.marginRight = "0px";
+
   let marginLeftValue = Math.ceil(
     Number(window.getComputedStyle(menuNav).marginLeft.split("px")[0])
   );
   let marginRightValue = Math.ceil(
     Number(window.getComputedStyle(menuNav).marginRight.split("px")[0])
   );
+
   let check = menuNav.scrollWidth - mainContainer1.offsetWidth;
   // Show/Hide the arrows
   if (menuNav.scrollWidth > mainContainer1.offsetWidth) {
@@ -963,7 +979,7 @@ function checkHoriMenu() {
     slideLeft.classList.remove("hidden");
   }
 }
-
+}
 // double-menu click toggle start
 function doublemenu() {
   if (window.innerWidth >= 992) {

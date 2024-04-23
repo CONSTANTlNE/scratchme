@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
+use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Price;
 use App\Models\Product;
 use App\Models\ProductFeature;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Laravel\Facades\Image;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductController extends Controller
 {
@@ -24,7 +28,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-//        dd($request->hasFile('product_image'));
+//        dd($request);
 
         $locales = Language::all()->toArray();
         $rules   = [];
@@ -38,7 +42,7 @@ class ProductController extends Controller
             $rules["short_description".$locale["abbr"]] = 'required|string';
             $rules["long_description".$locale["abbr"]]  = 'required|string';
             $rules["price"]                             = 'required|numeric';
-            $rules["product_image"]                     = 'required';
+
         }
 
         $validatedData = $request->validate($rules);
@@ -76,18 +80,24 @@ class ProductController extends Controller
         $start2 = hrtime(true);
 
 
-        if ($request->hasFile('product_image')) {
+        if ($request->has('photo')) {
 
-            foreach ($request->file('product_image') as $image) {
+            foreach ($request->photo as $image) {
+                // Decode the base64 image data
+                $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $image));
 
-                $manager = new ImageManager(new Driver());
-                $img     = $manager->read($image);
-                $resized = $img->resize(320, 494);
-                $name    = $image->getClientOriginalName();
-                $resized->toJpeg(80)->save(public_path('productImage/'.$name));
+                // Generate a unique filename for the converted image
+                $filename = 'converted_image_' . time() . '.webp';
 
-                $product->addMedia(public_path('productImage/'.$name))
+                // Store the image data using Laravel's storage system
+                Storage::disk('public')->put($filename, $decodedImageData);
+
+                // Add the converted image to the media library
+                 $product->addMedia(storage_path('app/public/' . $filename))
                     ->toMediaCollection('product_image');
+
+                // Delete the temporary file
+                Storage::disk('public')->delete($filename);
 
             }
 
@@ -158,12 +168,25 @@ class ProductController extends Controller
     public function priceUpdate(Request $request)
     {
 
-        $locales         = Language::all()->toArray();
         $product         = Product::where('id', $request->id)->first();
         $newPrice        = new Price();
         $newPrice->price = $request->newprice;
         $product->prices()->save($newPrice);
         $product->save();
+
+        $unpaidOrders=Order::where('paid',0)->get();
+
+        // თუ არის გადაუხდელი შეკვეთა და ფასი შევცვალე , პივოთ თეიბლში ფასის აიდი განახლდეს ახალი ფასის აიდით
+        foreach($unpaidOrders as $order){
+            $orderproducts=OrderProduct::where('order_id',$order->id)->get();
+            foreach($orderproducts as $orderproduct){
+                $orderproduct->price_id=$newPrice->id;
+                $orderproduct->save();
+            }
+        }
+
+        $locales         = Language::all()->toArray();
+
 
         return back()->with('locales', $locales);
 
@@ -204,7 +227,15 @@ class ProductController extends Controller
     {
 
         $locales = Language::all()->toArray();
-        $product = Product::where('id', $request->id)->first();
+        $product = Product::where('id', $request->id)->with('media')->first();
+        $prices  =Price::where('product_id', $request->id)->get();
+        foreach($prices as $price){
+            $price->delete();
+        }
+
+        foreach($product->media as $media){
+            $media->delete();
+        }
         $product->delete();
 
         return back()->with('locales', $locales);
@@ -314,6 +345,53 @@ class ProductController extends Controller
         $product->update();
 
         return back();
+    }
+
+    public function changePhoto(Request $request,$locale,$id){
+
+//        dd($id);
+        $locales = Language::all()->toArray();
+
+        return view('admin.pages.change-photo',compact('id','locales'));
+    }
+
+    public function updatePhotos(Request $request){
+
+//        dd($request->id);
+
+        $product = Product::where('id', $request->id)->with('media')->first();
+        foreach ($product->media as $media){
+            $media->delete();
+        }
+
+        if ($request->has('photo')) {
+
+            foreach ($request->photo as $image) {
+                // Decode the base64 image data
+                $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $image));
+
+                // Generate a unique filename for the converted image
+                $filename = 'converted_image_' . time() . '.webp';
+
+                // Store the image data using Laravel's storage system
+                Storage::disk('public')->put($filename, $decodedImageData);
+
+                // Add the converted image to the media library
+                $product->addMedia(storage_path('app/public/' . $filename))
+                    ->toMediaCollection('product_image');
+
+                // Delete the temporary file
+                Storage::disk('public')->delete($filename);
+
+            }
+        }
+
+
+        $products = Product::with('prices', 'media', 'features')->get();
+        $locales  = Language::all()->toArray();
+
+        return view('admin.pages.all-products', compact('locales', 'products'));
+
     }
 
 }

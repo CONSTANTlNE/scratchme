@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\CouponDiscount;
 use App\Models\Delivery;
+use App\Models\Faq;
 use App\Models\Language;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Price;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -46,10 +50,13 @@ class OrderController extends Controller
     }
 
 
-
-
     public function addItem(Request $request)
     {
+
+        if(!auth()->check()){
+            return redirect('login');
+        }
+
         $locales = Language::all()->toArray();
 // dd($request->product_id);
         $order = Order::with('products')
@@ -84,10 +91,19 @@ class OrderController extends Controller
             }
         } else {
 
-            $delivery=Delivery::first();
-            $newOrder          = new Order();
-            $newOrder->user_id = auth()->user()->id;
-            $newOrder->delivery_id=$delivery->id;
+            $delivery     = Delivery::first();
+            $newOrder     = new Order();
+            $rand1        = Str::upper(Str::random(3, 'abcdefghijklmnopqrstuvwxyz'));
+            $rand         = random_int(156, 999);
+            $order_number = $rand1.'-'.$rand;
+            while (Order::where('order_number', $order_number)->exists()) {
+                $rand1        = Str::upper(Str::random(3, 'abcdefghijklmnopqrstuvwxyz'));
+                $rand         = random_int(156, 999);
+                $order_number = $rand1.'-'.$rand;
+            }
+            $newOrder->order_number = $order_number;
+            $newOrder->user_id      = auth()->user()->id;
+            $newOrder->delivery_id  = $delivery->id;
             $newOrder->save();
 //            Order and Product have many to many relationship
             $newOrder->products()->attach($request->product_id,
@@ -127,16 +143,14 @@ class OrderController extends Controller
         }
 
 
-
-
-
         return back();
 
 
     }
 
 
-    public  function deleteItem( Request $request) {
+    public function deleteItem(Request $request)
+    {
 //    dd($request->product_id);
         $order = Order::with('products')
             ->with('pivot')
@@ -145,7 +159,7 @@ class OrderController extends Controller
             ->first();
 
         // თუ ერთი პროდუტქია კალათაში და წაშალა მაშინ მთლიანი შეკვეთა იშლება
-        if($order->products->count() === 1){
+        if ($order->products->count() === 1) {
             $order->delete();
 
             return redirect()->route('index');
@@ -186,18 +200,69 @@ class OrderController extends Controller
 
     }
 
-    public function updateOrderDelivery(Request $request){
+    public function updateOrderDelivery(Request $request)
+    {
 
 
-        $order=Order::where('user_id',auth()->user()->id)->where('id',$request->id)->first();
+        $order = Order::where('user_id', auth()->user()->id)->where('id', $request->id)->first();
 //        dd($order);
-        if($order===null){
+        if ($order === null) {
             return back();
         }
-        $order->delivery_id=$request->delivery;
+        $order->delivery_id = $request->delivery;
         $order->save();
 
         return back();
+
+    }
+
+    public function userOrders(Request $request)
+    {
+
+        $languages = Language::all();
+        $products  = Product::with('prices', 'media', 'features')
+            ->where('active', 1)
+            ->where('for_landing', 1)
+            ->orderBy('position', 'asc')
+            ->get();
+
+        $faqs = Faq::all();
+
+        $OrderProduct=OrderProduct::with('prices','order.couponDiscount')->get();
+        $orders=Order::where('user_id',auth()->user()->id)
+            ->where('paid',1)
+            ->with('products','couponDiscount','user','delivery.prices','payment')
+            ->get();
+
+//        dd($OrderProduct);
+
+        $order = Order::with([
+            'products' => function ($query) {
+                $query->with('prices', 'media',);
+            }
+        ])->with('delivery.prices')
+            ->where('user_id', auth()->user()->id)
+            ->where('paid', 0)
+            ->first();
+
+
+        if ($order) {
+            $quantities      = DB::table('order_product')
+                ->where('order_id', $order->id)->get();
+            return view('pages.user-orders', compact('orders','languages','products','faqs','OrderProduct','quantities'));
+        }
+        return view('pages.user-orders', compact('orders','languages','products','faqs','OrderProduct'));
+    }
+
+
+    public function orderDetails(Request $request,$locale,$orderID){
+
+        $orderproduct=OrderProduct::where('order_id',$orderID)
+            ->where('user_id',auth()->user()->id)
+            ->with('prices','orderproducts.prices','order.couponDiscount')
+            ->get();
+        $locales = Language::all()->toArray();
+        return view('pages.order-details', compact('locales', 'orderproduct',));
 
     }
 

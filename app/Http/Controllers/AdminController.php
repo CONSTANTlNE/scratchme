@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
 use App\Models\CouponDiscount;
 use App\Models\Delivery;
 use App\Models\DeliveryPrice;
 use App\Models\Language;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -144,7 +146,7 @@ class AdminController extends Controller
 
         $locales = Language::all()->toArray();
 
-        $main=Language::where('main',1)->pluck('abbr')->first();
+        $main     = Language::where('main', 1)->pluck('abbr')->first();
         $jsonData = [];
         foreach ($locales as $locale) {
             $fileName = $locale['abbr'].'.json';
@@ -161,7 +163,7 @@ class AdminController extends Controller
         $keyCount = count($keys);
 
 
-        return view('admin.localization.staticTranslation', compact('locales','main', 'jsonData', 'keys', 'keyCount'));
+        return view('admin.localization.staticTranslation', compact('locales', 'main', 'jsonData', 'keys', 'keyCount'));
     }
 
 
@@ -184,9 +186,9 @@ class AdminController extends Controller
 //                $key => $text
 //            ];
 
-            $existingContent    = file_get_contents($filePath);
-            $existingData       = json_decode($existingContent, true);
-            if(isset($existingData[$key])){
+            $existingContent = file_get_contents($filePath);
+            $existingData    = json_decode($existingContent, true);
+            if (isset($existingData[$key])) {
                 return back()->with('error', 'Key already exists');
             }
             $existingData[$key] = $text;
@@ -212,7 +214,7 @@ class AdminController extends Controller
         // DELETE LOGIC
         if ($request->delete === 'delete') {
 
-            $keys  = $request->key;
+            $keys = $request->key;
 
             foreach ($languages as $index => $language) {
 
@@ -236,7 +238,7 @@ class AdminController extends Controller
             }
         } else {
             //  UPDATE LOGIC
-            $abbr = $request->abbr;
+            $abbr  = $request->abbr;
             $keys  = $request->key;
             $texts = $request->translation;
 //            dd($abbr);
@@ -263,7 +265,6 @@ class AdminController extends Controller
 
         return back()->with('locales', $locales);
     }
-
 
 
     public function testPage()
@@ -297,22 +298,24 @@ class AdminController extends Controller
     }
 
 
-    public function allOrders(Request $request){
+    public function allOrders(Request $request)
+    {
 
-        $OrderProduct=OrderProduct::with('prices','order.couponDiscount')->get();
-        $locales = Language::all()->toArray();
-        $orders=Order::with('products','couponDiscount','user','delivery.prices')->get();
+        $OrderProduct = OrderProduct::with('prices', 'order.couponDiscount')->get();
+        $locales      = Language::all()->toArray();
+        $orders       = Order::with('products', 'couponDiscount', 'user', 'delivery.prices')->get();
 
 
-        return view('admin.pages.orders',compact('orders','locales','OrderProduct'));
+        return view('admin.pages.orders', compact('orders', 'locales', 'OrderProduct'));
     }
 
 
-    public function singleOrder(Request $request,$locale,$orderID,$user){
+    public function singleOrder(Request $request, $locale, $orderID, $user)
+    {
 
 //        dd($order,$user);
-        $orderproduct=OrderProduct::where('order_id',$orderID)
-            ->with('prices','orderproducts.prices','order.couponDiscount',)
+        $orderproduct = OrderProduct::where('order_id', $orderID)
+            ->with('prices', 'orderproducts.prices', 'order.couponDiscount',)
             ->get();
 
 //        $order=Order::with('products','couponDiscount','user','delivery.prices')->where('id',$orderID)->where('user_id',$user)->first();
@@ -323,30 +326,163 @@ class AdminController extends Controller
 
         $locales = Language::all()->toArray();
 
-        return view('admin.pages.single-order', compact('locales', 'orderproduct', ));
+        return view('admin.pages.single-order', compact('locales', 'orderproduct',));
 
     }
 
-    public function delivery (Request $request){
+    public function delivery(Request $request)
+    {
 
-        $locales = Language::all()->toArray();
+        $locales    = Language::all()->toArray();
         $deliveries = Delivery::with('prices')->get();
 
-        return view('admin.pages.delivery',compact('deliveries','locales'));
+        return view('admin.pages.delivery', compact('deliveries', 'locales'));
     }
 
-    public function createDelivery(Request $request){
+    public function createDelivery(Request $request)
+    {
 
-        $delivery = new Delivery();
+        $delivery        = new Delivery();
         $delivery->title = $request->delivery_name;
         $delivery->save();
 
-        $price = new DeliveryPrice();
+        $price              = new DeliveryPrice();
         $price->delivery_id = $delivery->id;
-        $price->price = $request->delivery_price;
+        $price->price       = $request->delivery_price;
         $price->save();
 
         return back();
+
+    }
+
+    public function aboutUs(Request $request)
+    {
+
+        $locales = Language::all()->toArray();
+        $about   = About::with('media')->first();
+
+        return view('admin.pages.about', compact('locales', 'about'));
+    }
+
+    public function createAbout(Request $request)
+    {
+
+        $about = new About();
+        $about->setTranslation('title1', 'en', $request->title1_en);
+        $about->setTranslation('title2', 'en', $request->title2_en);
+        $about->setTranslation('content', 'en', $request->content_en);
+        $about->setTranslation('title1', 'ka', $request->title1_ka);
+        $about->setTranslation('title2', 'ka', $request->title2_ka);
+        $about->setTranslation('content', 'ka', $request->content_ka);
+        $about->save();
+
+        return back();
+    }
+
+    public function updateAbout(Request $request)
+    {
+
+        $about = About::first();
+        $about->setTranslation('title1', 'en', $request->title1_en);
+        $about->setTranslation('title2', 'en', $request->title2_en);
+        $about->setTranslation('content', 'en', $request->content_en);
+        $about->setTranslation('title1', 'ka', $request->title1_ka);
+        $about->setTranslation('title2', 'ka', $request->title2_ka);
+        $about->setTranslation('content', 'ka', $request->content_ka);
+        $about->update();
+
+        return back();
+    }
+
+    public function aboutStatus(Request $request)
+    {
+
+        $about = About::first();
+
+//        dd($request->has('status'));
+
+        if ($request->has('status')) {
+
+            $about->active = 1;
+        } else {
+
+            $about->active = 0;
+        }
+        $about->save();
+
+        return back();
+
+    }
+
+
+    public function aboutphoto(Request $request)
+    {
+        $about = About::with('media')->first();
+
+        foreach ($about->media as $old) {
+            $old->delete();
+        }
+        if ($request->has('main_img')) {
+
+
+            // Decode the base64 image data
+            $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->main_img));
+
+            // Generate a unique filename for the converted image
+            $filename = 'converted_image_'.time().'.webp';
+
+            // Store the image data using Laravel's storage system
+            Storage::disk('public')->put($filename, $decodedImageData);
+
+            // Add the converted image to the media library
+            $about->addMedia(storage_path('app/public/'.$filename))
+                ->toMediaCollection('about_main_img');
+
+            // Delete the temporary file
+            Storage::disk('public')->delete($filename);
+
+        }
+
+        if ($request->has('secondary_img')) {
+
+            // Decode the base64 image data
+            $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->secondary_img));
+
+            // Generate a unique filename for the converted image
+            $filename = 'converted_image_'.time().'.webp';
+
+            // Store the image data using Laravel's storage system
+            Storage::disk('public')->put($filename, $decodedImageData);
+
+            // Add the converted image to the media library
+            $about->addMedia(storage_path('app/public/'.$filename))
+                ->toMediaCollection('about_secondary_img');
+
+            // Delete the temporary file
+            Storage::disk('public')->delete($filename);
+
+        }
+
+        return back();
+
+    }
+
+    public function aboutphotoupdate(Request $request)
+    {
+
+
+
+    }
+
+
+    public function terms(Request $request)
+    {
+
+        $locales  = Language::all()->toArray();
+        $delivery = Delivery::with('prices')->first();
+        $terms    = Term::all();
+
+        return view('admin.pages.terms', compact('delivery', 'locales', 'terms'));
 
     }
 }

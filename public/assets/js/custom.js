@@ -10,7 +10,7 @@
   /* page loader */
 
   /* footer year */
-  document.getElementById("year").innerHTML = new Date().getFullYear();
+  // document.getElementById("year").innerHTML = new Date().getFullYear();
   /* footer year */
   /*Start Sidemenu Scroll */
   var myElement = document.getElementById("sidebar-scroll");
@@ -305,16 +305,24 @@
   window.onscroll = () => {
     const scrollTop = window.scrollY || window.pageYOffset;
     const clientHt = $rootElement.scrollHeight - $rootElement.clientHeight;
-    if (window.scrollY > 100) {
-      scrollToTop.style.display = "flex";
-    } else {
-      scrollToTop.style.display = "none";
+    if(scrollToTop!==null){
+      if (window.scrollY > 100) {
+        scrollToTop.style.display = "flex";
+      } else {
+        scrollToTop.style.display = "none";
+      }
     }
+
   };
-  scrollToTop.onclick = () => {
-    window.scrollTo(0, 0);
-    // window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+
+
+  if(scrollToTop!==null){
+    scrollToTop.onclick = () => {
+      window.scrollTo(0, 0);
+      // window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  }
+
   /* back to top */
 
   /*header-remove */

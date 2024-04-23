@@ -5,16 +5,6 @@
     {{--    @php dd($locales) @endphp--}}
 
     <div class="box">
-        {{--        @foreach($errors->any() as $error)--}}
-        {{--            <div class="alert alert-danger">--}}
-        {{--                <ul>--}}
-
-        {{--                    <li>{{ $error }}</li>--}}
-
-        {{--                </ul>--}}
-        {{--            </div>--}}
-        {{--        @endforeach--}}
-
 
         <div class="box-header">
             <h5 class="box-title">Add Product</h5>
@@ -34,13 +24,16 @@
             </div>
             <form action="{{route('storeProduct')}}" method="post"
                   enctype="multipart/form-data">
+                <input id="convertedImage" type="hidden" name="photo[]">
+                <input id="convertedImage2"  type="hidden" name="photo[]">
+                <input id="convertedImage3"  type="hidden" name="photo[]">
                 <div class="">
                     @foreach($locales as $index=> $locale)
                         @if($loop->first)
                             <div id="hs-tab-js-behavior-{{$index}}" role="tabpanel"
                                  aria-labelledby="hs-tab-js-behavior-item-{{$index}}">
                                 <div class="grid grid-cols-12 gap-6 m-auto mt-3">
-                                    <div class="xl:col-span-6 col-span-12">
+                                    <div class="xl:col-span-12 col-span-12">
                                         <div class="box">
                                             <div class="box-header justify-center text-center">
                                                 <div class="box-title">
@@ -127,100 +120,28 @@
                                                     @enderror
                                                     <div class="xl:col-span-12 col-span-12">
                                                         <div class="form-check">
-                                                            <label for="for_landing{{$locale['abbr']}}"
+                                                            <label for="for_landing"
                                                                    class="form-label">მთავარ გვერდზე?</label>
-                                                            <input id="for_landing{{$locale['abbr']}}"
+                                                            <input id="for_landing"
                                                                    class="form-check-input ms-2"
                                                                    type="checkbox" value=""
-                                                                   checked="" name="for_landing{{$locale['abbr']}}">
+                                                                   checked="" name="for_landing">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="flex justify-center">
-                                                    <button class=" ti-btn ti-btn-light ti-btn-wave">შექმნა</button>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="xl:col-span-6 col-span-12">
-                                        <div class="box">
-                                            <div class="box-header justify-between">
-                                                <div class="box-title">
-                                                    ფოტო
-                                                </div>
 
-                                            </div>
-                                            <div class="box-body text-center">
-                                                <div class="grid grid-cols-12 gap-y-3">
-                                                    <div class="xl:col-span-12 col-span-12">
-                                                        <img style="max-height:494px"
-                                                             src="{{asset('landing_assets/img/blank_image.jpg')}}"
-                                                             class="imagePreview hidden dark:block m-auto"
-                                                             alt="Hero Image - Dark Mode"
-                                                        />
-                                                        <input class="imageInput" style="display:none" type="file" name="product_image[]"
-                                                              >
-                                                    </div>
-                                                    @error('product_image')
-                                                    <p  class="text-danger xl:col-span-12 col-span-12">{{$message}}</p>
-                                                    @enderror
-                                                </div>
-                                                <button
-                                                        type="button" class="uploadProfileImage ti-btn ti-btn-light ti-btn-wave ">
-                                                    ატვირთვა
-                                                </button>
-                                            </div>
-                                            <div class="box-body text-center">
-                                                <div class="grid grid-cols-12 gap-y-3">
-                                                    <div class="xl:col-span-12 col-span-12">
-                                                        <img style="max-height:494px"
-                                                             src="{{asset('landing_assets/img/blank_image.jpg')}}"
-                                                             class="imagePreview hidden dark:block m-auto"
-                                                             alt="Hero Image - Dark Mode"
-                                                        />
-                                                        <input style="display:none" type="file" name="product_image[]"
-                                                              class="imageInput" >
-                                                    </div>
-                                                    @error('product_image')
-                                                    <p  class="text-danger xl:col-span-12 col-span-12">{{$message}}</p>
-                                                    @enderror
-                                                </div>
-                                                <button
-                                                        type="button" class="uploadProfileImage ti-btn ti-btn-light ti-btn-wave ">
-                                                    ატვირთვა
-                                                </button>
-                                            </div>
-                                            <div class="box-body text-center">
-                                                <div class="grid grid-cols-12 gap-y-3">
-                                                    <div class="xl:col-span-12 col-span-12">
-                                                        <img style="max-height:494px"
-                                                             src="{{asset('landing_assets/img/blank_image.jpg')}}"
-                                                             class="imagePreview hidden dark:block m-auto"
-                                                             alt="Hero Image - Dark Mode"
-                                                        />
-                                                        <input style="display:none" type="file" name="product_image[]"
-                                                              class="imageInput" >
-                                                    </div>
-                                                    @error('product_image')
-                                                    <p  class="text-danger xl:col-span-12 col-span-12">{{$message}}</p>
-                                                    @enderror
-                                                </div>
-                                                <button
-                                                        type="button" class="uploadProfileImage ti-btn ti-btn-light ti-btn-wave ">
-                                                    ატვირთვა
-                                                </button>
-                                            </div>
 
-                                        </div>
-
-                                    </div>
                                 </div>
                             </div>
                         @else
                             <div id="hs-tab-js-behavior-{{$index}}" class="hidden" role="tabpanel"
                                  aria-labelledby="hs-tab-js-behavior-item-{{$index}}">
                                 <div class="grid grid-cols-12 gap-6 m-auto mt-3">
-                                    <div class="xl:col-span-6 col-span-12">
+                                    <div class="xl:col-span-12 col-span-12">
                                         <div class="box">
                                             <div class="box-header justify-between">
                                                 <div class="box-title">
@@ -326,8 +247,80 @@
                         @endif
                     @endforeach
                 </div>
+                <div class="flex justify-center">
+                    <button class=" ti-btn ti-btn-light ti-btn-wave">შექმნა</button>
+                </div>
             </form>
+            <div class="xl:col-span-6 col-span-12">
 
+                <div class="box">
+                    <div class="box-header justify-between">
+                        <div class="box-title">
+                            ფოტო
+                        </div>
+
+                    </div>
+                    <div class="box-body text-center">
+                        <div class="grid grid-cols-12 gap-y-3">
+                            <div class="xl:col-span-12 col-span-12">
+                                <img style="max-height:494px"
+                                     src="{{asset('landing_assets/img/blank_image.jpg')}}"
+                                     class="imagePreview hidden dark:block m-auto"
+                                     alt="Hero Image - Dark Mode"
+                                />
+                                <input id="imageInput" onchange="convertToWebP()" class="imageInput" style="display:none" type="file" name="product_image[]"
+                                >
+                            </div>
+                            @error('product_image')
+                            <p  class="text-danger xl:col-span-12 col-span-12">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <button
+                                type="button" class="uploadProfileImage ti-btn ti-btn-light ti-btn-wave ">
+                            ატვირთვა
+                        </button>
+                    </div>
+                    <div class="box-body text-center">
+                        <div class="grid grid-cols-12 gap-y-3">
+                            <div class="xl:col-span-12 col-span-12">
+                                <img style="max-height:494px"
+                                     src="{{asset('landing_assets/img/blank_image.jpg')}}"
+                                     class="imagePreview hidden dark:block m-auto"
+                                     alt="Hero Image - Dark Mode" />
+                                <input id="imageInput2" onchange="convertToWebP2()" style="display:none" type="file" name="product_image[]"
+                                       class="imageInput" >
+                            </div>
+                            @error('product_image')
+                            <p  class="text-danger xl:col-span-12 col-span-12">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <button type="button" class="uploadProfileImage ti-btn ti-btn-light ti-btn-wave ">
+                            ატვირთვა
+                        </button>
+                    </div>
+                    <div class="box-body text-center">
+                        <div class="grid grid-cols-12 gap-y-3">
+                            <div class="xl:col-span-12 col-span-12">
+                                <img style="max-height:494px"
+                                     src="{{asset('landing_assets/img/blank_image.jpg')}}"
+                                     class="imagePreview hidden dark:block m-auto"
+                                     alt="Hero Image - Dark Mode"/>
+                                <input id="imageInput3" onchange="convertToWebP3()" style="display:none" type="file" name="product_image[]"
+                                       class="imageInput" >
+                            </div>
+                            @error('product_image')
+                            <p  class="text-danger xl:col-span-12 col-span-12">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <button
+                                type="button" class="uploadProfileImage ti-btn ti-btn-light ti-btn-wave ">
+                            ატვირთვა
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </div>
 

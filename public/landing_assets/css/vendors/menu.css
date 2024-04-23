@@ -43,7 +43,7 @@
 }
 
 .site-header {
-  background-color: transparent;
+  /*background-color: transparent;*/
   position: fixed;
   top: 0;
   width: 100%;
@@ -200,14 +200,28 @@
   order: 4;
 }
 
+
+
 @media (min-width: 992px) {
+  .nav-link-item{
+    text-align: center;
+    width: max-content;
+  }
   .top-contact-menu-wraper .nav-link-item {
     color: #fff !important;
+
+  }
+
+  .nav-link-item:hover {
+    color: rgb(255, 180, 77)!important;
+
   }
 
   .top-contact-menu-wraper .site-menu-main .nav-link-item {
     padding-top: 19px !important;
     padding-bottom: 19px !important;
+
+
   }
 
   .top-contact-menu-wraper .navbar {

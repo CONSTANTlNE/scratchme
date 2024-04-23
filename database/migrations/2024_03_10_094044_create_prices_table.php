@@ -16,7 +16,7 @@ return new class extends Migration
             $table->float('price');
             $table->boolean('discount_active')->nullable();
             $table->integer('discount')->nullable();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('product_id');
             $table->timestamps();
         });
     }

@@ -35,4 +35,9 @@ protected $guarded = [];
 
         return $this->hasMany(OrderProduct::class, 'order_id', 'id');
     }
+
+    public function payment(){
+
+        return $this->hasOne(Payment::class, 'order_id', 'id');
+    }
 }

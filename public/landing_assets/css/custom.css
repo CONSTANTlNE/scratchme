@@ -8,6 +8,13 @@
   filter: blur(55px);
 }
 
+.draggable-lang {
+  cursor: move;
+}
+
+.draggable-lang.dragging {
+  opacity: 1.5;
+}
 
 /* Custom CSS for accordion */
 .accordion-item .accordion-header {
@@ -161,6 +168,14 @@
   animation: horizontal-slide-from-left-to-right linear 10s infinite;
 }
 
+.contactsocials{
+  width: 100px;
+  height: 100px;
+}
+
+
+
+
 @keyframes horizontal-slide-from-right-to-left {
   from {
     transform: translateX(0);
@@ -185,6 +200,8 @@
   animation: fadeInDown 0.9s 1;
 }
 
+
+
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -196,3 +213,64 @@
     transform: translateZ(0);
   }
 }
+
+.vdbckgr{
+  padding-top:4%!important;
+  height: 100vh!important;
+}
+
+@media screen and (max-width: 768px) {
+  .vdbckgr{
+    padding-top:8%!important; ;
+    height: 80vh!important;
+  }
+
+}
+
+@media screen and (max-width: 400px) {
+  .vdbckgr{
+    padding-top:17%!important; ;
+    height: 45vh!important;
+  }
+
+  [data-productid] {
+    width: 160px;
+  }
+  .allp{
+    width: 160px;
+
+  }
+
+}
+
+@media screen and (max-width: 375px) {
+  .contactsocials{
+    width: 60px;
+    height: 60px;
+  }
+
+  .socials{
+    gap: 0!important;
+  }
+
+  #contact{
+    gap: 0!important;
+  }
+  [data-productid] {
+    width: 160px;
+  }
+  .allp{
+    width: 160px;
+
+  }
+
+  .vdbckgr{
+    padding-top:17%!important; ;
+    height: 45vh!important;
+  }
+
+}
+
+
+
+

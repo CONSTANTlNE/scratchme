@@ -1,0 +1,205 @@
+{
+  "public/landing_assets/fonts/ClashDisplay-Medium.ttf": {
+    "file": "assets/ClashDisplay-Medium-DF2JVhd0.ttf",
+    "src": "public/landing_assets/fonts/ClashDisplay-Medium.ttf"
+  },
+  "public/landing_assets/fonts/ClashDisplay-Medium.woff": {
+    "file": "assets/ClashDisplay-Medium-BGWuqKWX.woff",
+    "src": "public/landing_assets/fonts/ClashDisplay-Medium.woff"
+  },
+  "public/landing_assets/fonts/ClashDisplay-Medium.woff2": {
+    "file": "assets/ClashDisplay-Medium-C6p0M4ZN.woff2",
+    "src": "public/landing_assets/fonts/ClashDisplay-Medium.woff2"
+  },
+  "public/landing_assets/fonts/DMSans-Bold.ttf": {
+    "file": "assets/DMSans-Bold-zUzhS3dr.ttf",
+    "src": "public/landing_assets/fonts/DMSans-Bold.ttf"
+  },
+  "public/landing_assets/fonts/DMSans-Bold.woff": {
+    "file": "assets/DMSans-Bold-BBN1gOJY.woff",
+    "src": "public/landing_assets/fonts/DMSans-Bold.woff"
+  },
+  "public/landing_assets/fonts/DMSans-Bold.woff2": {
+    "file": "assets/DMSans-Bold-ZYj2xjA5.woff2",
+    "src": "public/landing_assets/fonts/DMSans-Bold.woff2"
+  },
+  "public/landing_assets/fonts/Inter-Black.ttf": {
+    "file": "assets/Inter-Black-B0xjwgPx.ttf",
+    "src": "public/landing_assets/fonts/Inter-Black.ttf"
+  },
+  "public/landing_assets/fonts/Inter-Black.woff": {
+    "file": "assets/Inter-Black-CTtlmNO-.woff",
+    "src": "public/landing_assets/fonts/Inter-Black.woff"
+  },
+  "public/landing_assets/fonts/Inter-Black.woff2": {
+    "file": "assets/Inter-Black-L4u-TJdX.woff2",
+    "src": "public/landing_assets/fonts/Inter-Black.woff2"
+  },
+  "public/landing_assets/fonts/Inter-Bold.ttf": {
+    "file": "assets/Inter-Bold-BMZzSwaj.ttf",
+    "src": "public/landing_assets/fonts/Inter-Bold.ttf"
+  },
+  "public/landing_assets/fonts/Inter-Bold.woff": {
+    "file": "assets/Inter-Bold-Z43oQLFA.woff",
+    "src": "public/landing_assets/fonts/Inter-Bold.woff"
+  },
+  "public/landing_assets/fonts/Inter-Bold.woff2": {
+    "file": "assets/Inter-Bold-CA0LKwsl.woff2",
+    "src": "public/landing_assets/fonts/Inter-Bold.woff2"
+  },
+  "public/landing_assets/fonts/Inter-ExtraBold.ttf": {
+    "file": "assets/Inter-ExtraBold-Ds7hXNt3.ttf",
+    "src": "public/landing_assets/fonts/Inter-ExtraBold.ttf"
+  },
+  "public/landing_assets/fonts/Inter-ExtraBold.woff": {
+    "file": "assets/Inter-ExtraBold-D8tnHJQR.woff",
+    "src": "public/landing_assets/fonts/Inter-ExtraBold.woff"
+  },
+  "public/landing_assets/fonts/Inter-ExtraBold.woff2": {
+    "file": "assets/Inter-ExtraBold-BSQ_Kp9P.woff2",
+    "src": "public/landing_assets/fonts/Inter-ExtraBold.woff2"
+  },
+  "public/landing_assets/fonts/Inter-ExtraLight.ttf": {
+    "file": "assets/Inter-ExtraLight-Ktpy4XTr.ttf",
+    "src": "public/landing_assets/fonts/Inter-ExtraLight.ttf"
+  },
+  "public/landing_assets/fonts/Inter-ExtraLight.woff": {
+    "file": "assets/Inter-ExtraLight-Dx-C65lx.woff",
+    "src": "public/landing_assets/fonts/Inter-ExtraLight.woff"
+  },
+  "public/landing_assets/fonts/Inter-ExtraLight.woff2": {
+    "file": "assets/Inter-ExtraLight-DAqYndQ3.woff2",
+    "src": "public/landing_assets/fonts/Inter-ExtraLight.woff2"
+  },
+  "public/landing_assets/fonts/Inter-Light.ttf": {
+    "file": "assets/Inter-Light-CLEpMhJ6.ttf",
+    "src": "public/landing_assets/fonts/Inter-Light.ttf"
+  },
+  "public/landing_assets/fonts/Inter-Light.woff": {
+    "file": "assets/Inter-Light-C1V5VdPZ.woff",
+    "src": "public/landing_assets/fonts/Inter-Light.woff"
+  },
+  "public/landing_assets/fonts/Inter-Light.woff2": {
+    "file": "assets/Inter-Light-gH95x9NM.woff2",
+    "src": "public/landing_assets/fonts/Inter-Light.woff2"
+  },
+  "public/landing_assets/fonts/Inter-Medium.ttf": {
+    "file": "assets/Inter-Medium-CCtxv7E7.ttf",
+    "src": "public/landing_assets/fonts/Inter-Medium.ttf"
+  },
+  "public/landing_assets/fonts/Inter-Medium.woff": {
+    "file": "assets/Inter-Medium-CvXXjMAz.woff",
+    "src": "public/landing_assets/fonts/Inter-Medium.woff"
+  },
+  "public/landing_assets/fonts/Inter-Medium.woff2": {
+    "file": "assets/Inter-Medium-CsakM9g_.woff2",
+    "src": "public/landing_assets/fonts/Inter-Medium.woff2"
+  },
+  "public/landing_assets/fonts/Inter-Regular.ttf": {
+    "file": "assets/Inter-Regular-DkgxAvIv.ttf",
+    "src": "public/landing_assets/fonts/Inter-Regular.ttf"
+  },
+  "public/landing_assets/fonts/Inter-Regular.woff": {
+    "file": "assets/Inter-Regular-DN_ktijZ.woff",
+    "src": "public/landing_assets/fonts/Inter-Regular.woff"
+  },
+  "public/landing_assets/fonts/Inter-Regular.woff2": {
+    "file": "assets/Inter-Regular-B8UQiZUE.woff2",
+    "src": "public/landing_assets/fonts/Inter-Regular.woff2"
+  },
+  "public/landing_assets/fonts/Inter-SemiBold.ttf": {
+    "file": "assets/Inter-SemiBold-CyfnmGK0.ttf",
+    "src": "public/landing_assets/fonts/Inter-SemiBold.ttf"
+  },
+  "public/landing_assets/fonts/Inter-SemiBold.woff": {
+    "file": "assets/Inter-SemiBold-D7fPrnyA.woff",
+    "src": "public/landing_assets/fonts/Inter-SemiBold.woff"
+  },
+  "public/landing_assets/fonts/Inter-SemiBold.woff2": {
+    "file": "assets/Inter-SemiBold-CZu4gNki.woff2",
+    "src": "public/landing_assets/fonts/Inter-SemiBold.woff2"
+  },
+  "public/landing_assets/fonts/Inter-Thin.ttf": {
+    "file": "assets/Inter-Thin-DAMwmN9A.ttf",
+    "src": "public/landing_assets/fonts/Inter-Thin.ttf"
+  },
+  "public/landing_assets/fonts/Inter-Thin.woff": {
+    "file": "assets/Inter-Thin-fgjdE02f.woff",
+    "src": "public/landing_assets/fonts/Inter-Thin.woff"
+  },
+  "public/landing_assets/fonts/Inter-Thin.woff2": {
+    "file": "assets/Inter-Thin-CY0I01lA.woff2",
+    "src": "public/landing_assets/fonts/Inter-Thin.woff2"
+  },
+  "public/landing_assets/fonts/Raleway-Bold.ttf": {
+    "file": "assets/Raleway-Bold-CbMkW2ef.ttf",
+    "src": "public/landing_assets/fonts/Raleway-Bold.ttf"
+  },
+  "public/landing_assets/fonts/Raleway-Bold.woff": {
+    "file": "assets/Raleway-Bold-2JCEX0OF.woff",
+    "src": "public/landing_assets/fonts/Raleway-Bold.woff"
+  },
+  "public/landing_assets/fonts/Raleway-Bold.woff2": {
+    "file": "assets/Raleway-Bold-BRQUsGi6.woff2",
+    "src": "public/landing_assets/fonts/Raleway-Bold.woff2"
+  },
+  "public/landing_assets/fonts/SpaceGrotesk-Bold.ttf": {
+    "file": "assets/SpaceGrotesk-Bold-8Oienzqd.ttf",
+    "src": "public/landing_assets/fonts/SpaceGrotesk-Bold.ttf"
+  },
+  "public/landing_assets/fonts/SpaceGrotesk-Bold.woff": {
+    "file": "assets/SpaceGrotesk-Bold-CQQxXQM-.woff",
+    "src": "public/landing_assets/fonts/SpaceGrotesk-Bold.woff"
+  },
+  "public/landing_assets/fonts/SpaceGrotesk-Bold.woff2": {
+    "file": "assets/SpaceGrotesk-Bold-BgYXcMI_.woff2",
+    "src": "public/landing_assets/fonts/SpaceGrotesk-Bold.woff2"
+  },
+  "public/landing_assets/img/cheveron-right.svg": {
+    "file": "assets/cheveron-right-DwCCwblm.svg",
+    "src": "public/landing_assets/img/cheveron-right.svg"
+  },
+  "public/landing_assets/img/th-1/404-text-image.jpg": {
+    "file": "assets/404-text-image-Blonr6Dw.jpg",
+    "src": "public/landing_assets/img/th-1/404-text-image.jpg"
+  },
+  "public/landing_assets/img/th-1/icon-white-checkmark-filled.svg": {
+    "file": "assets/icon-white-checkmark-filled-Qnf-asOF.svg",
+    "src": "public/landing_assets/img/th-1/icon-white-checkmark-filled.svg"
+  },
+  "public/landing_assets/img/th-2/arc-bottom-shape-1.svg": {
+    "file": "assets/arc-bottom-shape-1-D1w8Qe1n.svg",
+    "src": "public/landing_assets/img/th-2/arc-bottom-shape-1.svg"
+  },
+  "public/landing_assets/img/th-2/arc-top-shape-1.svg": {
+    "file": "assets/arc-top-shape-1-BKlmpDe1.svg",
+    "src": "public/landing_assets/img/th-2/arc-top-shape-1.svg"
+  },
+  "public/landing_assets/img/th-2/content-shape.jpg": {
+    "file": "assets/content-shape-Bxvp2AtQ.jpg",
+    "src": "public/landing_assets/img/th-2/content-shape.jpg"
+  },
+  "public/landing_assets/img/th-4/hero-bg.jpg": {
+    "file": "assets/hero-bg-rdZ03Qmx.jpg",
+    "src": "public/landing_assets/img/th-4/hero-bg.jpg"
+  },
+  "public/landing_assets/scratchme/Yellow-removebg-preview.png": {
+    "file": "assets/Yellow-removebg-preview-yJ3NjHUf.png",
+    "src": "public/landing_assets/scratchme/Yellow-removebg-preview.png"
+  },
+  "public/landing_assets/video.mp4": {
+    "file": "assets/video-B1CB7_7S.mp4",
+    "src": "public/landing_assets/video.mp4"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-DAS0f4Bo.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-D70ecATV.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

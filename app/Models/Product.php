@@ -14,7 +14,6 @@ class Product extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasTranslations;
 
-
     public $translatable = ['product_name', 'product_short_description', 'product_long_description',];
 
     public function prices()

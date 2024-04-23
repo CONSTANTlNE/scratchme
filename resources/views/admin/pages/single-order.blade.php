@@ -50,7 +50,9 @@
                                             <div class="me-3">
                                                         <span class="avatar avatar-xxl bg-light">
                                                             @foreach($order->orderproducts->media as $img)
+                                                                @if($loop->first)
                                                                 <img src="{{$img->getFullUrl()}}" alt="">
+                                                                @endif
                                                             @endforeach
                                                         </span>
                                             </div>
@@ -64,8 +66,9 @@
                                     </td>
                                     <td>
                                         <div style="text-align: center" class="font-semibold text-[0.875rem]">
+{{--                                            @php dd($order->prices->price) @endphp--}}
                                             @if($order->order->coupon_discount_id!==null)
-                                                {{$order->prices->whereNull('discount')->first()->price}}
+                                                {{$order->prices->price}}
                                             @else
                                                 {{$order->prices->price}}
                                             @endif
@@ -83,7 +86,7 @@
                                     <td>
                                         <div style="text-align: center" class="text-[0.875rem] font-semibold">
                                             @if($order->order->coupon_discount_id!==null)
-                                                {{$order->quantity * $order->prices->whereNull('discount')->first()->price}}
+                                                {{$order->quantity * $order->prices->price}}
                                             @else
                                                 {{$order->quantity * $order->prices->price}}
                                             @endif

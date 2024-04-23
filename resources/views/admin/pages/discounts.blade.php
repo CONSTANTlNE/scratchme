@@ -99,7 +99,6 @@
                                                         <form action="{{route('deleteDiscount')}}" method="post">
                                                             @csrf
                                                             <input type="hidden" name="generalDiscount" value="{{$genDiscount->id}}">
-                                                            inp
                                                             <button class="ti-btn bg-primary text-white !font-medium">
                                                                 წაშალე მაგის დედაც
                                                             </button>

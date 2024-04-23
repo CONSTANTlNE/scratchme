@@ -12,7 +12,7 @@
                 <div style="justify-content: center!important" class="box-header justify-center text-center">
                     <a style="margin: auto!important;" class="ti-btn ti-btn-dark ti-btn-wave text-white"
                        href="{{route('allproduct')}}">
-                        ყველა პროდუქტი
+                        {{__('All Products')}}
                     </a>
                 </div>
                 <div class="box-body">
@@ -21,19 +21,28 @@
                             <thead>
                             <tr>
                                 <th scope="row" class="text-center">
-                                    Product Name
+
+                                    {{__('Product Name')}}
                                 </th>
                                 <th scope="row" style="text-align: center" class="text-center">
-                                    Price
+
+                                    {{__('Price')}}
+
                                 </th>
                                 <th scope="row" style="text-align: center" class="text-center">
-                                    Quantity
+
+                                    {{__('Quantity')}}
+
                                 </th>
                                 <th scope="row" style="text-align: center" class="text-center">
-                                    Total
+
+                                    {{__('Total')}}
+
                                 </th>
                                 <th scope="row" style="text-align: center" class="text-center">
-                                    Action
+
+                                    {{__('Action')}}
+
                                 </th>
                             </tr>
                             </thead>
@@ -48,7 +57,7 @@
                                         <td>
                                             <div class="flex items-center">
                                                 <div class="me-3">
-                                                <span class="avatar avatar-xxl bg-light">
+                                                <span style="min-height: 100px!important;" class="avatar avatar-xxl bg-light">
                                                     @foreach($product->media as $img)
                                                         @if($loop->first)
                                                         <img src="{{$img->getFullUrl()}}" alt="">
@@ -115,11 +124,7 @@
                                                         <input type="hidden" name="id" value="{{$product->id}}">
                                                         <button class="hs-tooltip-toggle ti-btn ti-btn-icon bg-danger text-white !font-medium ">
                                                             <i class="ri-delete-bin-line"></i>
-                                                            <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 !bg-black !text-xs !font-medium !text-white shadow-sm"
-                                                                  role="tooltip" data-popper-placement="left"
-                                                                  style="position: fixed; inset: 0px 0px auto auto; margin: 0px; transform: translate(-490px, 284px);">
-                                                                Remove From cart
-                                                            </span>
+
                                                         </button>
                                                     </form>
                                                 </div>
@@ -171,7 +176,7 @@
 
                                 <button
                                         class="ti-btn !bg-primary !text-white !font-medium !rounded-s-none !mb-0"
-                                        id="coupons">Apply
+                                        id="coupons">{{__('Apply')}}
                                 </button>
 
                             </div>
@@ -180,14 +185,14 @@
                     <div class="p-4 border-b border-dashed dark:border-defaultborder/10">
                         @if(isset($order->products) && $order->coupon_discount_id!==null)
                             <div class="flex items-center justify-between mb-4">
-                                <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">Discount</div>
+                                <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">{{__('Discount')}}</div>
                                 <div class="font-semibold text-[1.25rem] text-success couponDiscount">{{$couponDiscounts->discount}}
                                     %
                                 </div>
                             </div>
                         @endif
                         <div class="flex items-center justify-between mb-4">
-                            <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">Delivery</div>
+                            <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">{{__('Delivery')}}</div>
                           <form id="deliveryForm" action="{{route('updateOrderDelivery')}}" method="post">
                               <input type="hidden" name="id" @if(isset($order)) value="{{$order->id}}" @endif>
                               @csrf
@@ -200,7 +205,7 @@
 
                         </div>
                         <div class="flex items-center justify-between mb-4">
-                            <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">Delivery Charges ₾:</div>
+                            <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">{{__('Delivery Charges')}} ₾:</div>
                             <div id="deliveryprice" class="font-semibold text-[1.25rem] text-danger">
                              @if(isset($order))
                                     {{$order->delivery->prices->last()->price}}
@@ -208,7 +213,7 @@
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
-                            <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">Total ₾:</div>
+                            <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">{{__('Total')}} ₾:</div>
                             <div id="orderAmount" class=" font-bold text-[1.25rem] text-primary">
                                 @php
                                     $total = 0;
@@ -244,7 +249,7 @@
                             <div class="flex flex-col justify-center text-center mt-2">
                                 <p @error('address')
                                    style="color:  red;font-weight: bolder"
-                                   @enderror class="mb-2 text-muted">Addres @error('address') ! @enderror</p>
+                                   @enderror class="mb-2 text-muted">{{__('Address')}} @error('address') ! @enderror</p>
                                 <textarea
                                         @error('address')
                                         style="border: 1px solid red;"
@@ -260,7 +265,7 @@
                                    style="color:  red;font-weight: bolder"
                                    @enderror
 
-                                   class="mb-2 text-muted w-9">Mobile @error('mobile') ! @enderror</p>
+                                   class="mb-2 text-muted w-9">{{__('Mobile')}} @error('mobile') ! @enderror</p>
                                 <input value="{{auth()->user()->mobile}}" name="mobile"
                                        @error('mobile')
                                        style="border: 1px solid red;width: 150px!important;margin:auto"
@@ -270,14 +275,14 @@
                             </div>
                         </div>
                         <div style="padding-bottom: 0!important;" class="p-4 grid">
-                            <button class="ti-btn bg-primary  text-white !font-medium !mb-2">Proceed To
-                                Checkout
+                            <button class="ti-btn bg-primary  text-white !font-medium !mb-2">
+                                {{__('Proceed To Checkout')}}
                             </button>
                         </div>
                     </form>
-                    <div class="p-4 grid">
-                        <a href="products.html" class="ti-btn bg-light  !font-medium">Countinue Shopping</a>
-                    </div>
+{{--                    <div class="p-4 grid">--}}
+{{--                        <a href="products.html" class="ti-btn bg-light  !font-medium">Countinue Shopping</a>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>

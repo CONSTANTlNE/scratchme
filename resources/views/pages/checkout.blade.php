@@ -13,10 +13,10 @@
             <div class="box" id="cart-container-delete">
                 <div style="justify-content: center!important" class="box-header justify-center text-center">
                     <a style="margin: auto!important;" class="ti-btn ti-btn-dark ti-btn-wave text-white" href="{{route('cart')}}">
-                        კორექტირება
+{{__('Change')}}
                     </a>
                     <a style="margin: auto!important;" class="ti-btn ti-btn-dark ti-btn-wave text-white" href="{{route('allproduct')}}">
-                        ყველა პროდუქტი
+                        {{__('All Products')}}
                     </a>
                 </div>
 
@@ -26,16 +26,16 @@
                             <thead>
                             <tr>
                                 <th scope="row" class="text-center">
-                                    Product Name
+                                    {{__('Product Name')}}
                                 </th>
                                 <th scope="row" style="text-align: center" class="text-center">
-                                    Price
+                                    {{__('Price')}}
                                 </th>
                                 <th scope="row" style="text-align: center" class="text-center">
-                                    Quantity
+                                    {{__('Quantity')}}
                                 </th>
                                 <th scope="row" style="text-align: center" class="text-center">
-                                    Total
+                                    {{__('Total')}}
                                 </th>
 
                             </tr>
@@ -47,17 +47,18 @@
                                     <td>
                                         <div class="flex items-center">
                                             <div class="me-3">
-                                                        <span class="avatar avatar-xxl bg-light">
-                                                            @foreach($product->media as $img)
-                                                                <img src="{{$img->getFullUrl()}}" alt="">
-                                                            @endforeach
-                                                        </span>
+                                                <span style="min-height: 100px!important;" class="avatar avatar-xxl bg-light">
+                                                    @foreach($product->media as $img)
+                                                        @if($loop->first)
+                                                            <img src="{{$img->getFullUrl()}}" alt="">
+                                                        @endif
+                                                    @endforeach
+                                                </span>
                                             </div>
                                             <div>
                                                 <div class="mb-1 text-[0.875rem] font-semibold">
                                                     <a href="javascript:void(0);">{{$product->product_name}}</a>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </td>
@@ -124,18 +125,18 @@
                         <div class="p-4 border-b border-dashed dark:border-defaultborder/10">
                             @if(isset($order->products)  && $order->coupon_discount_id!==null)
                                 <div class="flex items-center justify-between mb-4">
-                                    <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">Discount</div>
+                                    <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">{{__('Discount')}}</div>
                                     <div class="font-semibold text-[1.25rem] text-success couponDiscount">{{$couponDiscounts->discount}}
                                         %
                                     </div>
                                 </div>
                             @endif
                             <div class="flex items-center justify-between mb-4">
-                                <div  class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">Delivery Charges</div>
+                                <div  class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">{{__('Delivery Charges')}}</div>
                                 <div class="font-semibold text-[1.25rem] text-danger">{{$order->delivery->prices->last()->price}}</div>
                             </div>
                             <div class="flex items-center justify-between">
-                                <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">Total :</div>
+                                <div class="text-[#8c9097] dark:text-white/50 text-[1.25rem] ">{{(__('Total'))}} :</div>
                                 <div id="orderAmount" class=" font-bold text-[1.25rem] text-primary">
                                     @php
                                         $total = 0;
@@ -152,8 +153,6 @@
                                                     $subtotal = $quantities[$index]->quantity * $product->prices->last()->price;
                                                   $total += $subtotal;
                                                 }
-
-
                                             @endphp
                                         @endforeach
                                     @endif
@@ -168,11 +167,11 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center text-center mt-2">
-                            <p class="mb-2 text-muted">address</p>
+                            <p class="mb-2 text-muted">{{__('Address')}}</p>
                             <textarea disabled   style="border-color: black" type="text" name="address" class="form-control text-center" id="input">{{$order->address}}</textarea>
                         </div>
                         <div class="flex flex-col justify-center text-center mt-2">
-                            <p class="mb-2 text-muted w-9">Mobile</p>
+                            <p class="mb-2 text-muted w-9">{{__('Mobile')}}</p>
                             <input disabled style="border-color: black;width: 150px!important;margin:auto"  type="text" value="{{auth()->user()->mobile}}" class="form-control text-center" id="input">
                         </div>
                     </div>

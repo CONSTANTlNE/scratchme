@@ -44,16 +44,9 @@
     <!-- Quill Editor -->
 
     <link href="{{asset('landing_assets/css/glightbox.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('landing_assets/css/custom.css')}}" rel="stylesheet"/>
 
-    <style>
-        .draggable-lang {
-            cursor: move;
-        }
 
-        .draggable-lang.dragging {
-            opacity: 1.5;
-        }
-    </style>
     <script src="https://unpkg.com/htmx.org@1.9.10"
             integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
             crossorigin="anonymous"></script>
@@ -912,6 +905,9 @@
             @yield('discounts')
             @yield('admin-orders')
             @yield('delivery')
+            @yield('change-photo')
+            @yield('about')
+            @yield('terms')
         </div>
     </div>
     <!-- End::content  -->
@@ -984,6 +980,7 @@
 
 <script src="{{asset('landing_assets/js/glightbox.min.js')}}"></script>
 <script src="{{asset('landing_assets/js/custom-glightbox.js')}}"></script>
+<script src="{{asset('landing_assets/js/webp.js')}}"></script>
 {{--<!-- Quill Editor JS -->--}}
 {{--<script src="{{asset('assets/libs/quill/quill.min.js')}}"></script>--}}
 
@@ -1018,8 +1015,9 @@
 
 <!-- edit static traslation -->
 <script>
-    const editTranslationButtons = document.querySelectorAll(`[data-edit]`);
-    // const updateForm = document.getElementById('updateForm');
+
+document.addEventListener('mousemove',()=>{
+    let editTranslationButtons = document.querySelectorAll(`[data-edit]`);
     editTranslationButtons.forEach((el, index) => {
 
         el.addEventListener('click', e => {
@@ -1061,7 +1059,6 @@
         const cancelEdit = document.querySelectorAll('[data-cancel-submit="' + el.getAttribute('data-edit') + '"]');
         cancelEdit.forEach((eli) => {
             eli.addEventListener('click', e => {
-                console.log('clicked')
 
                 document.querySelectorAll('[data-form-abbr="' + el.getAttribute('data-edit') + '"]').forEach(element => {
                     element.setAttribute('disabled', '');
@@ -1073,7 +1070,7 @@
                 document.querySelectorAll('[data-submit="' + eli.getAttribute('data-cancel-submit') + '"]').forEach(element => {
                     element.style.display = 'none';
                 });
-                console.log(document.querySelectorAll('[data-submit="' + eli.getAttribute('data-cancel-submit') + '"]'))
+                // console.log(document.querySelectorAll('[data-submit="' + eli.getAttribute('data-cancel-submit') + '"]'))
 
                 document.querySelectorAll('[data-cancel-submit="' + eli.getAttribute('data-cancel-submit') + '"]').forEach(element => {
                     element.style.display = 'none';
@@ -1115,8 +1112,8 @@
 
         deleteTranslation.forEach((dlt1) => {
             dlt1.addEventListener('click', e => {
-                console.log('delete clicked')
-                console.log(document.querySelectorAll('[data-deleteinput="' + el.getAttribute('data-edit') + '"]'))
+                // console.log('delete clicked')
+                // console.log(document.querySelectorAll('[data-deleteinput="' + el.getAttribute('data-edit') + '"]'))
                 document.querySelectorAll('[data-deleteinput="' + el.getAttribute('data-edit') + '"]').forEach(dlt => {
                     dlt.removeAttribute('disabled');
                     console.log(dlt)
@@ -1127,14 +1124,14 @@
             })
         })
     });
-
+})
 
 </script>
 
 
 
-{{-- Drag and Drop Functionality--}}
-{{--<script src="{{asset('assets\js\myDragAndDrop.js')}}">--}}
+{{-- Drag and Drop Functionality for Languages--}}
+
 <script>
     const draggables = document.querySelectorAll(".draggable-lang");
     const containers = document.querySelectorAll(".lang-container");
@@ -1352,6 +1349,17 @@
 
 
 
+
+</script>
+
+<script>
+    const aboutstatusform=document.getElementById('aboutstatusform')
+    const statusbutton=document.getElementById('status')
+    statusbutton.addEventListener('click', function() {
+        if (aboutstatusform) {
+            aboutstatusform.submit();
+        }
+    });
 
 </script>
 </body>

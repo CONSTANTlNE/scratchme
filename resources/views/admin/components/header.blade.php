@@ -1006,14 +1006,18 @@
                                 >
                             </li>
                             <li>
-                                <a
+                                <form action="{{route('logout')}}" method="POST">
+                                    @csrf
+
+                                <button
                                         class="w-full ti-dropdown-item !text-[0.8125rem] !p-[0.65rem] !gap-x-0 !inline-flex"
-                                        href="sign-in-cover.html"
+
                                 ><i
                                             class="ti ti-logout text-[1.125rem] me-2 opacity-[0.7]"
                                     ></i
-                                    >Log Out</a
+                                    >Log Out</button
                                 >
+                                </form>
                             </li>
                         </ul>
                     </div>

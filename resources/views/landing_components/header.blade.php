@@ -1,14 +1,12 @@
 <header class="site-header site-header--absolute is--white py-3 bg-black" id="sticky-menu">
     <div class="global-container">
-        <div   class="flex items-center justify-between gap-x-8 align-middle">
+        <div class="flex items-center justify-between gap-x-8 align-middle">
             <!-- Header Logo -->
-
-            <a href="{{route('index', ['locale' => app()->getLocale()])}}" class="">
-                <img src="{{asset('landing_assets/scratchme/Yellow-removebg-preview.png')}}" alt="AIMass" width="200"/>
+            <a href="{{route('index', ['locale' => app()->getLocale()])}}">
+{{--                <img src="{{asset('landing_assets/scratchme/Yellow-removebg-preview.png')}}" alt="AIMass" width="200" />--}}
+                <img src="{{Vite::asset('public/landing_assets/scratchme/Yellow-removebg-preview.png')}}" alt="AIMass" width="200" />
             </a>
-            <!-- Header Logo -->
 
-            <!-- Header Navigation -->
             <div class="menu-block-wrapper">
                 <div class="menu-overlay"></div>
                 <nav class="menu-block" id="append-menu-header">
@@ -23,23 +21,45 @@
                     </div>
                     <ul class="site-menu-main is-text-white gap-3">
 
-                        <li style="margin-left: 10px"  class="nav-item ">
+                        <li style="margin-left: 10px" class="nav-item ">
                             <a style="padding-top: 0!important;padding-bottom: 0!important"
                                href="{{route('allproduct')}}"
-                               class=" text-center nav-link button hidden rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block">All
-                                Products</a>
+                               class="nav-link-item">{{__('All Products')}}</a>
                         </li>
-                        <li style="margin-left: 10px"   class="nav-item">
+                        <li style="margin-left: 10px" class="nav-item mobile-menu-close">
                             <a style="padding-top: 0!important;padding-bottom: 0!important" href="#contact"
-                               class=" nav-link button hidden rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block">Contact</a>
+                               class="  nav-link-item ">{{__('Contact')}}</a>
                         </li>
+
+
+                        <li style="margin-left: 10px" class="nav-item mobile-menu-close">
+                            <a style="padding-top: 0!important;padding-bottom: 0!important" href="{{route('about')}}"
+                               class="  nav-link-item ">{{__('About')}}</a>
+                        </li>
+                        <li style="margin-left: 10px" class="nav-item mobile-menu-close">
+                            <a style="padding-top: 0!important;padding-bottom: 0!important" href="{{route('landingterms')}}"
+                               class="  nav-link-item ">{{__('Terms & Conditions')}}</a>
+                        </li>
+
 
                         @if(auth()->check())
+                            <li style="margin-left: 10px" class="nav-item mobile-menu-close">
+                                <a style="padding-top: 0!important;padding-bottom: 0!important" href="{{route('userOrders')}}"
+                                   class="  nav-link-item ">{{__('My Orders')}}</a>
+                            </li>
+                            @role('admin')
+                            <li style="margin-left: 10px" class="nav-item mobile-menu-close">
+                                <a style="padding-top: 0!important;padding-bottom: 0!important" href="{{route('adminMain')}}"
+                                   class="  nav-link-item ">
+                                    <span style="color:yellow;margin-bottom: 5px;" class="material-symbols-outlined">settings</span>
+                                </a>
+                            </li>
 
+                            @endrole
                             <form style="height: 50px" class="nav-item" action="{{route('logout')}}" method="post">
                                 @csrf
                                 <button style="margin-left: 10px; "
-                                        class=" button rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block">
+                                        class=" nav-link-item">
 
                                     <span class="material-symbols-outlined mt-1">logout</span>
 
@@ -47,18 +67,19 @@
                             </form>
 
                         @else
-                            <li style="margin-left: 10px"  class="nav-item">
-                            <a style="padding-top: 0!important;padding-bottom: 0!important;" href="{{route('login')}}"
-                               class="button hidden rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block">Login</a>
+                            <li style="margin-left: 10px" class="nav-item">
+                                <a style="padding-top: 0!important;padding-bottom: 0!important;"
+                                   href="{{route('login')}}"
+                                   class="nav-link-item">{{__('Login')}}</a>
                             </li>
 
-                            <li style="margin-left: 10px"  class="nav-item">
-                                <a style="padding-top: 0!important;padding-bottom: 0!important;" href="{{route('register')}}"
-                               class="button hidden rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block">Sign
-                                up free</a>
+                            <li style="margin-left: 10px" class="nav-item">
+                                <a style="padding-top: 0!important;padding-bottom: 0!important;"
+                                   href="{{route('register')}}"
+                                   class="nav-link-item">{{__('Register')}}</a>
                             </li>
-
                         @endif
+
                     </ul>
                 </nav>
             </div>
@@ -86,83 +107,38 @@
                                 @endphp
                                 <a href="{{$newUrl}}" data-lang="{{$language->abbr}}"
                                 >
-                                    {{--                                    --}}
-                                    {{--                                    <img src="{{asset('landing_assets/flags/gb.svg')}}" alt="English Flag"--}}
-                                    {{--                                    />--}}
+
                                     {!! $language->icon !!}
                                 </a>
                             </li>
                         @endforeach
-                        {{--                        <li>--}}
-                        {{--                            @php--}}
-                        {{--                                $currentUrl = request()->getRequestUri();--}}
-                        {{--                                $segments = explode('/', $currentUrl);--}}
-                        {{--                                $segments[1] = 'en';--}}
-                        {{--                                $newUrl = implode('/', $segments);--}}
-                        {{--                            @endphp--}}
-                        {{--                            <a href="{{$newUrl}}" data-lang="en"--}}
-                        {{--                            ><img src="{{asset('landing_assets/flags/gb.svg')}}" alt="English Flag"--}}
-                        {{--                                /></a>--}}
-                        {{--                        </li>--}}
-                        {{--                        <li>--}}
-                        {{--                            @php--}}
-                        {{--                                $currentUrl = request()->getRequestUri();--}}
-                        {{--                                $segments = explode('/', $currentUrl);--}}
-                        {{--                                $segments[1] = 'ka';--}}
-                        {{--                                $newUrl = implode('/', $segments);--}}
-                        {{--                            @endphp--}}
-                        {{--                            <a href="{{$newUrl}}" data-lang="ka"--}}
-                        {{--                            ><img src="{{asset('landing_assets/flags/ge.svg')}}" alt="Georgian Flag"--}}
-                        {{--                                /></a>--}}
-                        {{--                        </li>--}}
-                        <!-- Add more languages as needed -->
+
                     </ul>
                 </div>
                 @if(auth()->check())
-                <span class="cart ">
+                    <span class="cart">
 
-                    <a href="{{route('cart')}}" style="all:unset;cursor: pointer">
+                    <a href="{{route('cart')}}" style="all:unset;cursor: pointer" class="nav-link-item">
                     <span style="color:white!important;margin-top: 8px;margin-left: 8px"
                           class="material-symbols-outlined">shopping_cart</span>
                         @php
                             if(isset($quantities)){
                               $quantity=$quantities->sum('quantity');
-
                             }
-
                         @endphp
-
-                    <span id="cartCount" @if(isset($quantity)&&$quantity>0) style="display: block" @else style="display: none"
+                    <span id="cartCount" @if(isset($quantity)&&$quantity>0) style="display: block"
+                          @else style="display: none"
                           @endif class="cart__count">
                           @if(isset($quantities))
-                        {{$quantity}}
+                            {{$quantity}}
                         @endif
                     </span>
 
                     </a>
                 </span>
+
+
                 @endif
-{{--                @if(auth()->check())--}}
-{{--                    <form action="{{route('logout')}}" method="post">--}}
-{{--                        @csrf--}}
-{{--                        <button--}}
-{{--                                class=" button hidden rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block">--}}
-{{--                            <span class="material-symbols-outlined mt-1">logout</span>--}}
-{{--                        </button>--}}
-{{--                    </form>--}}
-
-{{--                @else--}}
-{{--                    <a style="padding-top: 0!important;padding-bottom: 0!important;" href="{{route('login')}}"--}}
-{{--                       class="button hidden rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block">Login</a>--}}
-{{--                    <a style="padding-top: 0!important;padding-bottom: 0!important;" href="{{route('register')}}"--}}
-{{--                       class="button hidden rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block">Sign--}}
-{{--                        up free</a>--}}
-
-{{--                @endif--}}
-                @role('admin')
-                <a class="button hidden rounded-[50px] border-black bg-black text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white lg:inline-block"
-                   href="{{route('adminMain')}}">Admin</a>
-                @endrole
 
                 <!-- Responsive Offcanvas Menu Button -->
                 <div class="block lg:hidden">
