@@ -100,9 +100,8 @@
 
                                 <div class="text-lg leading-[1.4] lg:text-[21px]">
                                     <p class="mb-7 last:mb-0">
-                                        {{$about->content}}
+                                        {!! $about->content !!}
                                     </p>
-
 {{--                                    <a href="contact.html"--}}
 {{--                                        class="button mt-5 rounded-[50px] border-2 border-black bg-black py-4 text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white">Get--}}
 {{--                                        in touch</a>--}}

@@ -1,6 +1,6 @@
 
-import GLightbox from 'glightbox';
-// import GLightbox from './glightbox.min.js';
+
+import GLightbox from "glightbox";
 
 const defaultGlightbox = GLightbox({
     selector: '.defaultGlightbox'

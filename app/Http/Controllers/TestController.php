@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Hash;
 
 class TestController extends Controller
 {
@@ -12,18 +13,23 @@ class TestController extends Controller
 
 //        $products=Product::with('prices','media')->get();
 
-       dd( $request->ip());
+//       dd( $request->ip());
+//
+//        $userId = $request->cookie('user_id');
+//
+//        if (!$userId) {
+//            // Generate a unique identifier for the user
+//            $userId = uniqid();
+//
+//            // Store the identifier in a cookie
+//            Cookie::queue('user_id', $userId, 60 * 24 * 30); // Expires in 1 year
+//        }
+//
+//        return view('test',compact('userId'));
 
-        $userId = $request->cookie('user_id');
+        $hashedPassword = Hash::make('S-123456ge');
 
-        if (!$userId) {
-            // Generate a unique identifier for the user
-            $userId = uniqid();
+        return $hashedPassword;
 
-            // Store the identifier in a cookie
-            Cookie::queue('user_id', $userId, 60 * 24 * 30); // Expires in 1 year
-        }
-
-        return view('test',compact('userId'));
     }
 }

@@ -1249,7 +1249,7 @@ document.addEventListener('mousemove',()=>{
             el.addEventListener('click', function () {
                 console.log(imageInput[index])
                 imageInput[index].click()
-  console.log('clicked')
+                console.log('clicked')
                 imageInput[index].addEventListener('change', function () {
                     const input = this;
                     if (input.files && input.files[0]) {

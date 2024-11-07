@@ -70,7 +70,7 @@
 
                                     </div>
                                     <button type="submit"
-                                        class="button mt-7 block rounded-[50px] border-2 border-black bg-black py-4 text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white">
+                                        class="button mt-7 block rounded-[50px] border-2 border-black bg-colorblack py-4 text-white border-none hover:text-black">
                                         {{__('Create account')}}
                                     </button>
                                     <!-- Form Group -->

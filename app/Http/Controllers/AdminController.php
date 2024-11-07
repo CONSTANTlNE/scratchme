@@ -359,9 +359,12 @@ class AdminController extends Controller
     {
 
         $locales = Language::all()->toArray();
+
         $about   = About::with('media')->first();
 
-        return view('admin.pages.about', compact('locales', 'about'));
+        return view('admin.pages.about', compact('locales','about' ));
+
+
     }
 
     public function createAbout(Request $request)

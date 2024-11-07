@@ -230,6 +230,7 @@ Route::get('auth/{provider}/redirect/', [SocialiteController::class, 'redirect']
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'callback']);
 
 
+
 // ======================= FORTIFY ========================================
 
 Route::group(['middleware' => config('fortify.middleware', ['web', 'Setlocale'])], function () {

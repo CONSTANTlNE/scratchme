@@ -24,7 +24,6 @@ class ProductController extends Controller
         return view('admin.pages.products', compact('locales'));
     }
 
-
     public function store(Request $request)
     {
 
@@ -142,7 +141,6 @@ class ProductController extends Controller
 
     }
 
-
     public function allProduct()
     {
         $products = Product::with('prices', 'media', 'features')->get();
@@ -150,7 +148,6 @@ class ProductController extends Controller
 
         return view('admin.pages.all-products', compact('locales', 'products'));
     }
-
 
     public function changeProductPosition(Request $request)
     {
@@ -335,7 +332,6 @@ class ProductController extends Controller
         return back();
     }
 
-
     public function updateProdName(Request $request)
     {
 
@@ -351,8 +347,10 @@ class ProductController extends Controller
 
 //        dd($id);
         $locales = Language::all()->toArray();
+        $product = Product::where('id', $request->id)->with('media')->first();
 
-        return view('admin.pages.change-photo',compact('id','locales'));
+
+        return view('admin.pages.change-photo',compact('id','locales','product'));
     }
 
     public function updatePhotos(Request $request){
@@ -365,7 +363,6 @@ class ProductController extends Controller
         }
 
         if ($request->has('photo')) {
-
             foreach ($request->photo as $image) {
                 // Decode the base64 image data
                 $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $image));
@@ -382,7 +379,6 @@ class ProductController extends Controller
 
                 // Delete the temporary file
                 Storage::disk('public')->delete($filename);
-
             }
         }
 
@@ -393,5 +389,4 @@ class ProductController extends Controller
         return view('admin.pages.all-products', compact('locales', 'products'));
 
     }
-
 }

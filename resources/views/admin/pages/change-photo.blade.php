@@ -5,8 +5,8 @@
         @csrf
         <input type="hidden" value="{{$id}}" name="id">
         <input id="convertedImage" type="hidden" name="photo[]">
-        <input id="convertedImage2"  type="hidden" name="photo[]">
-        <input id="convertedImage3"  type="hidden" name="photo[]">
+        <input id="convertedImage2" type="hidden" name="photo[]">
+        <input id="convertedImage3" type="hidden" name="photo[]">
         <div class="xl:col-span-6 col-span-12">
 
             <div class="box">
@@ -21,7 +21,11 @@
                     <div class="grid grid-cols-12 gap-y-3">
                         <div class="xl:col-span-12 col-span-12">
                             <img style="max-height:494px"
-                                 src="{{asset('landing_assets/img/blank_image.jpg')}}"
+                                 @foreach($product->media as $index=> $media)
+                                     @if($index===0)
+                                         src="{{$media->getUrl()}}"
+                                     @endif
+                                 @endforeach
                                  class="imagePreview hidden dark:block m-auto"
                                  alt="Hero Image - Dark Mode"
                             />
@@ -42,7 +46,11 @@
                     <div class="grid grid-cols-12 gap-y-3">
                         <div class="xl:col-span-12 col-span-12">
                             <img style="max-height:494px"
-                                 src="{{asset('landing_assets/img/blank_image.jpg')}}"
+                                 @foreach($product->media as $index=> $media)
+                                     @if($index===1)
+                                         src="{{$media->getUrl()}}"
+                                     @endif
+                                 @endforeach
                                  class="imagePreview hidden dark:block m-auto"
                                  alt="Hero Image - Dark Mode"/>
                             <input id="imageInput2" onchange="convertToWebP2()" style="display:none" type="file"
@@ -61,7 +69,11 @@
                     <div class="grid grid-cols-12 gap-y-3">
                         <div class="xl:col-span-12 col-span-12">
                             <img style="max-height:494px"
-                                 src="{{asset('landing_assets/img/blank_image.jpg')}}"
+                                 @foreach($product->media as $index=> $media)
+                                     @if($index===2)
+                                         src="{{$media->getUrl()}}"
+                                     @endif
+                                 @endforeach
                                  class="imagePreview hidden dark:block m-auto"
                                  alt="Hero Image - Dark Mode"/>
                             <input id="imageInput3" onchange="convertToWebP3()" style="display:none" type="file"
